@@ -1,16 +1,20 @@
-import { CallReview } from "@/components/CallReview";
-import { fromTranscript, type RawTranscript } from "@/lib/call";
-import { matchLatencies, type LatencyReport, type ToolReport } from "@/lib/latency";
-import latencyReport from "../../data/latency.json";
-import toolReport from "../../data/tools.json";
-import raw from "../../public/transcript.json";
-
-// Transcript timestamps run ~13% faster than sample.wav; this lines turn starts up with the audio's silences.
-const AUDIO_SCALE = 1.131;
+import Link from "next/link";
+import { CALLS } from "@/lib/calls";
 
 export default function Home() {
-  const transcript = raw as RawTranscript;
-  const call = fromTranscript(transcript, "/sample.wav", AUDIO_SCALE);
-  const latencies = matchLatencies(latencyReport as LatencyReport, transcript.response.turns, toolReport as ToolReport);
-  return <CallReview call={call} latencies={latencies} />;
+  return (
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-6">
+      <h1 className="text-xl font-semibold">Calls</h1>
+      <ul className="flex flex-col gap-2">
+        {Object.entries(CALLS).map(([id, source]) => (
+          <li key={id}>
+            <Link href={`/calls/${id}`} className="block rounded-lg border border-zinc-200 px-4 py-3 hover:bg-zinc-50/10">
+              <span className="font-medium">{source.title}</span>
+              <span className="ms-2 text-sm text-zinc-500">{source.transcript.response.turns.length} turns</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
 }
