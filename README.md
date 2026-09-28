@@ -7,7 +7,6 @@ A review room for replaying a voice-agent call and finding the moment it went wr
 ```bash
 pnpm install
 pnpm dev        # http://localhost:3000
-pnpm test       # vitest, tests live in tests/
 pnpm build
 ```
 
@@ -15,14 +14,14 @@ Stack: Next.js 16 (App Router), React 19 with the React Compiler, TypeScript, Ta
 
 ## Status
 
-| # | Must-have | Status |
-|---|---|---|
-| 1 | Player and transcript in sync | Done |
-| 2 | Where did the time go? | Partial: perceived latency per turn plus call summary (avg, p50, p99, max). No stage breakdown yet |
-| 3 | Arabic-aware search | Not started |
-| 4 | Long calls stay fast | Engine designed for it; 45-min call not generated or measured yet |
-| 5 | Mark it and share it | Not started |
-| 6 | Accessible and Arabic-first | Partial: `dir="auto"` on turns, focusable transcript, screen-reader labels on latency |
+| #   | Must-have                     | Status                                                                                             |
+| --- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| 1   | Player and transcript in sync | Done                                                                                               |
+| 2   | Where did the time go?        | Done: per-turn stage bar + whole-call breakdown from real platform data. Tool timings are dummy |
+| 3   | Arabic-aware search           | Not started                                                                                        |
+| 4   | Long calls stay fast          | Engine designed for it; 45-min call not generated or measured yet                                  |
+| 5   | Mark it and share it          | Not started                                                                                        |
+| 6   | Accessible and Arabic-first   | Partial: `dir="auto"` on turns, focusable transcript, screen-reader labels on latency              |
 
 ## How it works
 
@@ -50,16 +49,25 @@ play ─► requestAnimationFrame loop
 - **Seek.** A single delegated click handler reads `data-start` from the clicked word or turn timestamp and sets `audio.currentTime`. The browser fires `seeked`, and the highlight follows.
 - **Follow without fighting.** `useFollowPlayback` stops following only on actions a person takes: wheel, touch, scroll keys, or dragging the scrollbar. Our own `scrollIntoView` calls don't count. A "Back to playback" button, or clicking any word, turns following back on.
 
-### Perceived latency: `src/lib/latency.ts`
+### Where did the time go?: `src/lib/latency.ts`
 
-Perceived latency is measured from the end of the customer's last turn to the start of the agent's reply.
+Real platform data from `data/latency.json`, plus dummy tool timings from `data/tools.json`.
 
-- Consecutive customer turns: measured from the last one.
-- Negative gaps (the agent talking over the caller) are overlaps, not latency, so they're excluded.
+- **Perceived latency** is the platform's `ub_latency_ms`: from `user_stops_speaking` to `bot_starts_speaking`.
+- **Stages** are `last_stt_ms` → `last_llm_ms` → tool → `first_tts_ms`. Speech recognition, model and first-audio times add up exactly to `total_latency_ms_per_turn`.
+- **Network / other** is `network_latency_ms` minus any tool time: whatever the platform measured end to end but no stage accounts for.
+- **Matching:** the report uses its own turn ids, so `matchLatencies` pairs each entry with the agent turn that started closest to `bot_starts_speaking`, within 2.5s and using each turn once. All 29 entries match; 28 of them are ~100ms before the transcript's start time.
+- **Per turn:** a badge (red at 1s or more) plus a stacked bar. Every bar shares the call's max latency as its scale, so a slow turn is visibly long. Any turn with a tool call shows a chip: wrench icon, tool name, and ✓ success, ✕ failed or ⏱ timed out. Status is shown by the icon and label, not only by colour. Hovering shows the breakdown, and screen readers get it as text.
+- **Whole call:** avg / p50 / p99 / max tiles, plus one bar of the total time per stage, with a legend that lists every value and percentage.
 - Stats use nearest-rank percentiles, so p99 is always a value that was actually observed.
-- Replies of 1s or more are flagged red.
 
-On the sample call there are 28 replies: avg ~268ms, p50 144ms, p99/max 2.4s. The slowest is turn 22, where the agent searches for flights.
+On this call: 29 replies, avg 701ms (matches the platform's own `average_perceived_latency_ms_per_call`), p50 603ms, max 2.5s. Speech recognition is 51% of all waiting.
+
+| Turn | What the breakdown shows |
+|---|---|
+| 22 | 2.5s: `search_flights` (dummy, 1.9s) fills the gap the platform couldn't account for |
+| 42 | 1.7s: 1.26s unaccounted, after the misheard "Professor", with no tool involved |
+| 62 | `get_cancellation_policy` error (dummy), so the agent says it has no access |
 
 ## Key decisions and trade-offs
 
@@ -68,17 +76,19 @@ On the sample call there are 28 replies: avg ~268ms, p50 144ms, p99/max 2.4s. Th
 - **Binary search over a sorted index.** Turns can overlap (barge-ins), so the flat word list isn't guaranteed to be sorted. Sorting indices once keeps the search correct.
 - **Auto-scroll only outside the middle band.** Scrolling on every word makes the view jitter. Scrolling only when the word leaves the middle 50% keeps it calm.
 - **`AUDIO_SCALE = 1.131` in `page.tsx`.** The transcript covers ~258s but the wav is ~294s. I matched turn starts to the silences `ffmpeg silencedetect` found and settled on one linear factor. Without it, the highlight ends up ~36s ahead of the voice by the end of the call.
-- **Perceived latency from turn gaps, not pipeline events.** The sample has no `events`, so turn gaps are the only real signal. See the assumptions below.
+- **Per-turn aggregates, not the brief's `PipelineEvent` stream.** The real platform reports latency per turn, so I model that directly instead of inventing events to fit the brief's shape. `CallRecord.events` stays empty.
+- **Latency from the platform, not transcript gaps.** Transcript gaps said ~150ms. The platform's `user_stops_speaking` lands ~400ms before the transcript's `end_time`, so the gaps undercounted by ~4×.
+- **Tool time carved out of `network_latency_ms`.** The platform has no tool spans. A slow tool shows up as unaccounted time, so dummy tool durations are taken from that remainder rather than added on top. That keeps the total equal to what the caller heard.
 
 ## Assumptions
 
 - Word timings are estimated from character counts. Sync is correct at turn boundaries and approximate inside a turn. Real speech-recognition word timings would work without code changes.
 - One linear scale is enough to line the transcript up with the audio. Some turns may still be a few hundred ms early or late.
-- The customer's `end_time` in the transcript is probably when speech recognition finalised, not when the caller stopped talking. The audio has ~2s silences at most speaker changes, but the transcript shows ~150ms gaps. So perceived latency here is likely **under-reported**.
+- Tool data is made up (`data/tools.json`); every other latency number is real. Each tool's duration fits inside that turn's `network_latency_ms`.
+- Latency report turn 15 matches transcript turn 31 with a 1.85s offset, not the usual ~100ms. That's the barge-in, where the agent started talking over the caller.
 
 ## What I cut, and why
 
-- **Pipeline stage breakdown** (speech recognition → first token → tools → first audio): needs made-up `events`. I did turn-level perceived latency first because it's what the caller actually hears.
 - **45-minute call**: not generated yet, so the 60fps claim isn't measured yet (see below).
 - **Search, marks, share links, i18n, keyboard shortcuts, playback speed**: not started.
 
@@ -90,7 +100,8 @@ On the sample call there are 28 replies: avg ~268ms, p50 144ms, p99/max 2.4s. Th
 
 ## Next with another week
 
-- Generate `events`, including the hidden tool-call timeout with ~6s of silence, and show a stacked stage bar per turn plus a whole-call breakdown.
+- Generate the 45-minute call, including the hidden tool-call timeout with ~6s of silence.
+- Use `data/turns.csv` (`barge_in`) for the overlap stretch goal.
 - Arabic normalisation (hamza, ta marbuta, alef maqsura, diacritics, tatweel, Arabic-Indic digits) as a pure function with tests, plus search that jumps to the result's time.
 - Virtualise the transcript for the 45-minute call, keeping the index-to-span mapping by turn.
 - Marks on a timeline, with the call time and mark id stored in the URL so a share link opens at the right moment.
@@ -99,9 +110,9 @@ On the sample call there are 28 replies: avg ~268ms, p50 144ms, p99/max 2.4s. Th
 
 ## Decision log
 
-| Decision | Why | Commit |
-|---|---|---|
-| rAF loop + direct class change for the active word | Avoid re-rendering the whole transcript during playback | _TODO_ |
-| Linear `AUDIO_SCALE` to line the transcript up with the audio | Transcript and wav durations drift ~13% | _TODO_ |
-| Exclude negative gaps from latency stats | They're overlaps, and would drag the average down | _TODO_ |
-| _Changed my mind:_ _TODO_ | _TODO_ | _TODO_ |
+| Decision                                                      | Why                                                     | Commit |
+| ------------------------------------------------------------- | ------------------------------------------------------- | ------ |
+| rAF loop + direct class change for the active word            | Avoid re-rendering the whole transcript during playback | _TODO_ |
+| Linear `AUDIO_SCALE` to line the transcript up with the audio | Transcript and wav durations drift ~13%                 | _TODO_ |
+| _Changed:_ turn-gap latency → platform `ub_latency_ms`        | Gaps undercounted by ~4× once real data arrived         | _TODO_ |
+| _Changed my mind:_ _TODO_                                     | _TODO_                                                  | _TODO_ |

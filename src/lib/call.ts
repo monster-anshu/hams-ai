@@ -25,7 +25,7 @@ export type CallRecord = {
   events: PipelineEvent[];
 };
 
-type RawTurn = {
+export type RawTurn = {
   sequence_no: number;
   speaker: "agent" | "user";
   transcript: string;

@@ -4,9 +4,10 @@ import { useRef, type MouseEvent, type RefObject } from "react";
 import { useActiveWord } from "@/hooks/useActiveWord";
 import { useFollowPlayback } from "@/hooks/useFollowPlayback";
 import type { CallRecord } from "@/lib/call";
+import type { TurnLatency } from "@/lib/latency";
 import { TurnList } from "./TurnList";
 
-type Props = { call: CallRecord; latencies: Map<string, number>; audioRef: RefObject<HTMLAudioElement | null> };
+type Props = { call: CallRecord; latencies: Map<string, TurnLatency>; audioRef: RefObject<HTMLAudioElement | null> };
 
 export function Transcript({ call, latencies, audioRef }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ export function Transcript({ call, latencies, audioRef }: Props) {
   const spansRef = useRef<NodeListOf<HTMLElement> | null>(null);
   const { following, followingRef, setFollowing } = useFollowPlayback(scrollRef);
   const words = call.turns.flatMap((t) => t.words);
+  const scaleMs = Math.max(0, ...[...latencies.values()].map((l) => l.perceivedMs));
 
   useActiveWord(audioRef, words, (i) => {
     spansRef.current ??= scrollRef.current!.querySelectorAll<HTMLElement>("[data-word]");
@@ -38,7 +40,7 @@ export function Transcript({ call, latencies, audioRef }: Props) {
   return (
     <section aria-label="Transcript" className="relative min-h-0 flex-1">
       <div ref={scrollRef} tabIndex={0} onClick={seek} className="h-full overflow-y-auto rounded-lg border border-zinc-200 p-4">
-        <TurnList turns={call.turns} latencies={latencies} />
+        <TurnList turns={call.turns} latencies={latencies} scaleMs={scaleMs} />
       </div>
       {!following && (
         <button
