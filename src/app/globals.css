@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.word {
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.word:hover {
+  background: rgb(0 0 0 / 0.06);
+}
+
+.word-active {
+  background: #fde68a;
+  color: #111;
+}
