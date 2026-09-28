@@ -14,6 +14,7 @@ export function ShortcutHelp() {
     faster: m.faster,
     nextSlow: m.nextSlow,
     newMark: m.newMarkAtPlayhead,
+    search: m.search,
   };
 
   return (

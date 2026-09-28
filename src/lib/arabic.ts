@@ -17,3 +17,18 @@ export function dominantLang(text: string): "ar" | "en" {
   const latin = text.match(LATIN_LETTER)?.length ?? 0;
   return arabic > latin ? "ar" : "en";
 }
+
+// Folds the spellings Arabic readers treat as the same word, so search can compare them.
+// NFD splits "أ" into "ا" + a combining hamza, so stripping combining marks (\p{Mn})
+// removes every diacritic and every hamza-on-a-letter in one step.
+export function normalizeArabic(text: string) {
+  return toLatinDigits(text)
+    .normalize("NFKC")
+    .normalize("NFD")
+    .replace(/\p{Mn}/gu, "")
+    .replace(/ٱ/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/ـ/g, "")
+    .toLowerCase();
+}

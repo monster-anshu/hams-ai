@@ -8,6 +8,7 @@ export const SHORTCUTS = [
   { action: "faster", code: "Period", keys: "Alt+Shift+." },
   { action: "nextSlow", code: "KeyN", keys: "Alt+Shift+N" },
   { action: "newMark", code: "KeyM", keys: "Alt+Shift+M" },
+  { action: "search", code: "KeyF", keys: "Alt+Shift+F" },
 ] as const;
 
 export type ShortcutAction = (typeof SHORTCUTS)[number]["action"];

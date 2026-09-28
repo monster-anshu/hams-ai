@@ -38,3 +38,12 @@ body {
   background: #fde68a;
   color: #111;
 }
+
+.word-match {
+  background: rgb(99 102 241 / 0.25);
+}
+
+.word-match-current {
+  background: rgb(99 102 241 / 0.6);
+  outline: 2px solid rgb(99 102 241);
+}

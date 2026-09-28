@@ -23,7 +23,7 @@ Stack: Next.js 16 (App Router), React 19 with the React Compiler, TypeScript, Ta
 | --- | ----------------------------- | ------------------------------------------------------------------------------------------------------ |
 | 1   | Player and transcript in sync | Done                                                                                                   |
 | 2   | Where did the time go?        | Done: per-turn stage bar + whole-call breakdown from real platform data. Tool timings are dummy        |
-| 3   | Arabic-aware search           | Not started                                                                                            |
+| 3   | Arabic-aware search           | Done: normalised word-by-word search, highlight, Enter/⇧Enter jumps to each result's time              |
 | 4   | Long calls stay fast          | 45-min call generated and rendering; 60fps not measured yet                                            |
 | 5   | Mark it and share it          | Done: select text or set start/end, label + comment, shown on a timeline; share link opens at the mark |
 | 6   | Accessible and Arabic-first   | Done: Alt+Shift shortcuts, playback speed, announced status, `lang` per turn/word, EN/AR UI with RTL   |
@@ -111,6 +111,44 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 - **Result:** 1,214 turns, 606 agent replies (42 at 1s or more), 195 tool calls, 45:00 of audio.
 - **Limits:** word timings inside a turn are still estimated from word length, the voices sound robotic, and generation needs macOS.
 
+### Arabic-aware search: `src/lib/arabic.ts`, `src/lib/search.ts`, `SearchBar`
+
+**Normalisation** (`normalizeArabic`) folds the spellings Arabic readers treat as one word. The transcript and the query both go through it:
+
+| Step                                         | Handles                              | Example                                    |
+| -------------------------------------------- | ------------------------------------ | ------------------------------------------ |
+| Arabic-Indic digits → Latin                  | digits                               | ٩ → 9                                      |
+| `NFKC`                                       | presentation forms                   | ﻻ → لا                                     |
+| `NFD`, then strip combining marks (`\p{Mn}`) | diacritics **and** hamza on a letter | مَرْحَبًا → مرحبا, أ إ آ → ا, ؤ → و, ئ → ي |
+| ٱ → ا                                        | alef wasla                           | ٱلرحلة → الرحله                            |
+| ة → ه                                        | ta marbuta                           | رحلة → رحله                                |
+| ى → ي                                        | alef maqsura                         | على → علي                                  |
+| remove ـ                                     | tatweel                              | مـــرحبا → مرحبا                           |
+| lowercase                                    | English                              | Flight → flight                            |
+
+The NFD step does most of the work. Unicode stores أ as ا plus a combining hamza, so stripping combining marks removes every diacritic and every hamza-on-a-letter at once. This is the same rule set as Lucene's `ArabicNormalizationFilter`. I didn't use an npm package: the Arabic ones are tiny and cover only part of these rules, and the brief asks for the normalisation to be testable code of our own.
+
+**Matching** (`search`) is word by word:
+
+- Every word is normalised once, when the index is built.
+- A match is a run of consecutive words where each word **contains** the matching query word. "Contains" is what lets `اسعار` find `الأسعار` without special handling for the article `ال`.
+- Each result carries the word's position in the flat word list, which is also the span's position in the page. So highlighting and jumping need no DOM search.
+
+**UI:**
+
+- **Highlighting:** results use CSS classes on the existing spans, like the active word, so typing never re-renders the transcript.
+- **Navigating:** Enter / ⇧Enter or the ↑ ↓ buttons move between results, seeking the audio to each one. A polite live region reads "3 of 59 · 31:21".
+- **Keys:** Escape clears the search. Alt+Shift+F focuses the search box, since Ctrl+F stays the browser's.
+- **Typing:** the query goes through `useDeferredValue` so typing stays smooth.
+
+**Trade-offs:**
+
+- Folding ة → ه and ى → ي gives some false positives. For example, `على` (on) matches `علي` (Ali). For QA, a miss is worse than an extra hit.
+- There's no stemming (plurals, verb forms).
+- Matches don't cross turn boundaries.
+
+On the long call, `اسعار` finds both `أسعار` and `الاسعار` (59 matches), and `٩ الصبح` matches as a phrase.
+
 ### Mark it and share it: `src/lib/marks.ts`, `MarkForm`, `MarkList`, `Timeline`
 
 - **Selecting a range.** There are three ways, all feeding the same Start/End fields (`m:ss.d`, and Arabic-Indic digits are accepted):
@@ -178,7 +216,7 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 
 ## What I cut, and why
 
-- **Arabic-aware search (#3)**: not started. `src/lib/arabic.ts` has the digit mapping and script detection it will build on.
+- **Search features beyond the brief**: no results list, no stemming, no fuzzy matching. Prev/next plus highlights were enough to find and jump to a moment, and they're easy to reason about.
 - **Custom player controls**: the native `<audio controls>` provide an accessible seek bar and volume, so I added speed and shortcuts around them instead of rebuilding them.
 
 ## How I'll verify 60fps (not yet measured)
@@ -190,7 +228,7 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 ## Next with another week
 
 - Use `data/turns.csv` (`barge_in`) for the overlap stretch goal.
-- Arabic normalisation (hamza, ta marbuta, alef maqsura, diacritics, tatweel, Arabic-Indic digits) as a pure function with tests, plus search that jumps to the result's time.
+- Search across all calls (for Part 3's 200-call triage). There, MiniSearch with `normalizeArabic` as its `processTerm` would earn its place.
 - Virtualise the transcript for the 45-minute call, keeping the index-to-span mapping by turn.
 - Marks on a real backend, with ids in share links instead of the whole mark, plus author and timestamps.
 - Render the chosen language on the server (cookie), and translate the latency numbers' units.

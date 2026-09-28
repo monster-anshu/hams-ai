@@ -11,11 +11,13 @@ import { format } from "@/lib/i18n";
 import { slowReplies, type TurnLatency } from "@/lib/latency";
 import { markToSearch, type Mark } from "@/lib/marks";
 import { seekTo } from "@/lib/player";
+import { buildSearchIndex } from "@/lib/search";
 import { LanguageToggle } from "./LanguageToggle";
 import { LatencySummary } from "./LatencySummary";
 import { MarkForm, type MarkFormHandle } from "./MarkForm";
 import { MarkList } from "./MarkList";
 import { Player } from "./Player";
+import { SearchBar } from "./SearchBar";
 import { ShortcutHelp } from "./ShortcutHelp";
 import { Timeline } from "./Timeline";
 import { Transcript } from "./Transcript";
@@ -26,13 +28,15 @@ export function CallReview({ callId, call, latencies }: Props) {
   const { m } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
   const formRef = useRef<MarkFormHandle>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState("");
   const marks = useCallMarks(callId);
   const slow = slowReplies(call.turns, latencies);
+  const searchIndex = buildSearchIndex(call.turns);
   const actions = usePlayerActions(audioRef, slow, m, setStatus);
   const seek = (ms: number) => audioRef.current && seekTo(audioRef.current, ms);
 
-  useShortcuts({ ...actions, newMark: () => formRef.current?.startAtPlayhead() });
+  useShortcuts({ ...actions, newMark: () => formRef.current?.startAtPlayhead(), search: () => searchRef.current?.focus() });
 
   // A share link opens at its mark.
   const linkStart = marks.fromLink?.startMs;
@@ -73,6 +77,7 @@ export function CallReview({ callId, call, latencies }: Props) {
         <p role="status" className="min-h-5 text-sm text-zinc-500">
           {status || (marks.fromLink && format(m.openedShared, { label: marks.fromLink.label }))}
         </p>
+        <SearchBar index={searchIndex} inputRef={searchRef} onJump={seek} />
         <Transcript call={call} latencies={latencies} marks={marks.marks} activeMarkId={marks.activeMarkId} audioRef={audioRef} />
       </main>
       <aside className="flex min-h-0 flex-col gap-6 lg:overflow-y-auto">

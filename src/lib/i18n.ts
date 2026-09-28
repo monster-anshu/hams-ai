@@ -65,6 +65,12 @@ const en = {
   slower: "Slower",
   faster: "Faster",
   newMarkAtPlayhead: "New mark at playhead",
+  search: "Search transcript",
+  searchPlaceholder: "Search, e.g. اسعار",
+  prevResult: "Previous result",
+  nextResult: "Next result",
+  resultOf: "{n} of {total} · {time}",
+  noResults: "No results",
 };
 
 export type Messages = typeof en;
@@ -137,6 +143,12 @@ const ar: Messages = {
   slower: "أبطأ",
   faster: "أسرع",
   newMarkAtPlayhead: "علامة جديدة عند الوقت الحالي",
+  search: "البحث في النص",
+  searchPlaceholder: "ابحث، مثل اسعار",
+  prevResult: "النتيجة السابقة",
+  nextResult: "النتيجة التالية",
+  resultOf: "{n} من {total} · {time}",
+  noResults: "لا توجد نتائج",
 };
 
 export const MESSAGES: Record<Locale, Messages> = { en, ar };
