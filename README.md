@@ -19,14 +19,14 @@ Stack: Next.js 16 (App Router), React 19 with the React Compiler, TypeScript, Ta
 
 ## Status
 
-| #   | Must-have                     | Status                                                                                          |
-| --- | ----------------------------- | ----------------------------------------------------------------------------------------------- |
-| 1   | Player and transcript in sync | Done                                                                                            |
-| 2   | Where did the time go?        | Done: per-turn stage bar + whole-call breakdown from real platform data. Tool timings are dummy |
-| 3   | Arabic-aware search           | Not started                                                                                     |
-| 4   | Long calls stay fast          | 45-min call generated and rendering; 60fps not measured yet                                     |
-| 5   | Mark it and share it          | Not started                                                                                     |
-| 6   | Accessible and Arabic-first   | Partial: `dir="auto"` on turns, focusable transcript, screen-reader labels on latency           |
+| #   | Must-have                     | Status                                                                                                 |
+| --- | ----------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 1   | Player and transcript in sync | Done                                                                                                   |
+| 2   | Where did the time go?        | Done: per-turn stage bar + whole-call breakdown from real platform data. Tool timings are dummy        |
+| 3   | Arabic-aware search           | Not started                                                                                            |
+| 4   | Long calls stay fast          | 45-min call generated and rendering; 60fps not measured yet                                            |
+| 5   | Mark it and share it          | Done: select text or set start/end, label + comment, shown on a timeline; share link opens at the mark |
+| 6   | Accessible and Arabic-first   | Done: Alt+Shift shortcuts, playback speed, announced status, `lang` per turn/word, EN/AR UI with RTL   |
 
 ## How it works
 
@@ -55,6 +55,8 @@ play ─► requestAnimationFrame loop
 - **Paint.** The callback fires only when the index changes (about 3 times a second). It moves one CSS class. Word `i` in the flat word list is span `i` in the page, so no DOM search is needed.
 - **Seek.** A single delegated click handler reads `data-start` from the clicked word or turn timestamp and sets `audio.currentTime`. The browser fires `seeked`, and the highlight follows.
 - **Follow without fighting.** `useFollowPlayback` stops following only on actions a person takes: wheel, touch, scroll keys, or dragging the scrollbar. Our own `scrollIntoView` calls don't count. A "Back to playback" button, or clicking any word, turns following back on.
+
+- **Two clocks, one hook.** `usePlaybackFrame` owns the rAF loop and the `play`/`pause`/`seeked` listeners. The word highlight and the timeline playhead both use it, and both write to the DOM directly.
 
 ### Where did the time go?: `src/lib/latency.ts`
 
@@ -109,6 +111,48 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 - **Result:** 1,214 turns, 606 agent replies (42 at 1s or more), 195 tool calls, 45:00 of audio.
 - **Limits:** word timings inside a turn are still estimated from word length, the voices sound robotic, and generation needs macOS.
 
+### Mark it and share it: `src/lib/marks.ts`, `MarkForm`, `MarkList`, `Timeline`
+
+- **Selecting a range.** There are three ways, all feeding the same Start/End fields (`m:ss.d`, and Arabic-Indic digits are accepted):
+  - **Select text** in the transcript, across as many turns as needed. `useTranscriptSelection` turns the selection into a time range, from the first selected word's start to the last one's end. A "Use selected text (31:22–31:36)" button appears. The click that ends a drag-select doesn't seek.
+  - **"Use playhead"** next to each field.
+  - **Alt+Shift+M** fills Start with the playhead and End with playhead + 10s, then focuses the label field.
+- **Label and comment.** The label has suggestions (Silence, Slow tool, Misheard, Wrong answer) in the UI language, and both fields use `dir="auto"` for Arabic. Errors show in a `role="alert"`.
+- **Storage.** Marks are kept in `localStorage` per call, read through `useSyncExternalStore`, so they stay in sync across tabs and there's no hydration mismatch. Stored data is validated on read (`parseMarks`) and bad entries are dropped.
+- **On the timeline.** The strip under the player shows every mark as a band, the active one stronger. It also shows every slow reply as a red tick, placed where its silence starts and scaled by latency, plus the playhead. Clicking seeks. In the transcript, turns inside a mark get a side border, and turns inside the active mark are highlighted.
+- **Share link.** The mark itself is in the URL: `/calls/long?mark=1886000-1897500&label=Slow+tool&note=…`. There's no backend, so the engineer's browser has no copy of Lama's marks and the link has to carry everything. Opening it:
+  - seeks to the mark and highlights it on the timeline and in the transcript,
+  - announces "Opened shared mark: …",
+  - lists it as "Shared with you", with "Save to my marks".
+
+  The page is static, so the query string is read after hydration (`useLocationSearch`). Label and comment length are capped.
+
+### Accessible and Arabic-first
+
+- **Keyboard shortcuts** (`src/lib/shortcuts.ts`), listed in a "Keyboard shortcuts" panel:
+
+  | Keys            | Action                   |
+  | --------------- | ------------------------ |
+  | Alt+Shift+K     | Play / pause             |
+  | Alt+Shift+J / L | Back / forward 5 seconds |
+  | Alt+Shift+, / . | Slower / faster          |
+  | Alt+Shift+N     | Next slow reply          |
+  | Alt+Shift+M     | New mark at playhead     |
+  - **Alt+Shift chords only, never single keys.** Screen readers use single letters in browse mode (NVDA/JAWS: `k` = next link, `h` = heading), and their own modifiers are Insert, CapsLock or Ctrl+Option. Alt+Shift+letter collides with none of these.
+  - **Matched on `event.code`, the physical key.** On an Arabic keyboard, `event.key` for K is `ن`. `aria-keyshortcuts` is set on the matching controls.
+
+- **Next slow reply.** A button and Alt+Shift+N seek to one second before the next silence of 1s or more, and announce "Slow reply at 31:28, 6.1s". This is the keyboard and screen-reader route to what the timeline shows.
+- **Playback speed.** A select from 0.5× to 2×. The audio element owns the rate and the select mirrors `ratechange`, so the shortcut and the select can't disagree.
+- **Announcements.** One visible `role="status"` line reports speed changes, jumps, saved marks, copied links and opened share links. Screen-reader users get feedback for shortcuts that change nothing visible.
+- **A transcript screen readers can use.**
+  - Each turn has a real `<button>` timestamp ("Play from 31:21").
+  - The speaker is text.
+  - The latency breakdown is readable text.
+  - `lang` is set per turn by dominant script (`dominantLang`), and per word when a word differs, so the reader switches to an Arabic voice mid-sentence.
+  - The active word isn't announced, because that would be noise.
+  - The timeline is `aria-hidden`; "Next slow reply" and the marks list give the same jumps.
+- **English/Arabic UI** (`src/lib/i18n.ts`). A typed dictionary means a missing Arabic key is a type error. The toggle sets `<html lang dir>`. The layout uses logical properties (`ms-`, `ps-`, `border-s`, `text-start`), so it mirrors in RTL: the sidebar moves left, the stage bars flow right-to-left, and the back arrow flips. Transcript paragraphs use `dir="auto"`, so English turns stay LTR inside the Arabic UI and the reverse. Time ranges, tool names and shortcut keys are forced LTR. IBM Plex Sans Arabic is loaded for Arabic text.
+
 ## Key decisions and trade-offs
 
 - **`requestAnimationFrame` over `timeupdate`.** `timeupdate` fires about 4 times a second, which makes the highlight lag and step. rAF follows the display refresh rate, and it only runs while playing.
@@ -120,6 +164,9 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 - **Latency from the platform, not transcript gaps.** Transcript gaps said ~150ms. The platform's `user_stops_speaking` lands ~400ms before the transcript's `end_time`, so the gaps undercounted by ~4×.
 - **Tool time carved out of `network_latency_ms`.** The platform has no tool spans. A slow tool shows up as unaccounted time, so dummy tool durations are taken from that remainder rather than added on top. That keeps the total equal to what the caller heard.
 - **Generated audio instead of looping `sample.wav`.** Looping the real recording gives ~600 turns in 45 minutes, not ~1,200, and the transcript wouldn't match the words. Synthesising the audio lets every word in the transcript actually be spoken at its timestamp.
+- **Share links carry the whole mark.** A mark id alone would need a backend to look it up. The trade-off is a longer URL, and a comment that's readable by anyone with the link.
+- **The timeline runs left-to-right in Arabic too.** It sits under the native player, which doesn't flip, and two opposite time axes on one screen would be worse than one that doesn't mirror.
+- **Language is chosen client-side.** The pages are static, so the server always renders English and a saved Arabic preference applies right after hydration, with a brief flash of English. A cookie read on the server would fix this, at the cost of dynamic rendering.
 - **Both calls prerender as static pages.** The long page is 2.4MB of HTML (200KB gzipped), because every word is a span. Virtualising the transcript would cut this, but it would complicate the word-index-to-span mapping the sync relies on, so I've left it until the 60fps measurement says it's needed.
 
 ## Assumptions
@@ -131,7 +178,8 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 
 ## What I cut, and why
 
-- **Search, marks, share links, i18n, keyboard shortcuts, playback speed**: not started.
+- **Arabic-aware search (#3)**: not started. `src/lib/arabic.ts` has the digit mapping and script detection it will build on.
+- **Custom player controls**: the native `<audio controls>` provide an accessible seek bar and volume, so I added speed and shortcuts around them instead of rebuilding them.
 
 ## How I'll verify 60fps (not yet measured)
 
@@ -141,12 +189,12 @@ Run `pnpm gen:long` to rebuild `public/calls/long.m4a` and `data/long/{transcrip
 
 ## Next with another week
 
-- A latency strip across the call's length above the transcript: one tick per reply, red when slow, click to seek. On the long call, it takes you straight to 31:28 without scrolling ~850 turns.
 - Use `data/turns.csv` (`barge_in`) for the overlap stretch goal.
 - Arabic normalisation (hamza, ta marbuta, alef maqsura, diacritics, tatweel, Arabic-Indic digits) as a pure function with tests, plus search that jumps to the result's time.
 - Virtualise the transcript for the 45-minute call, keeping the index-to-span mapping by turn.
-- Marks on a timeline, with the call time and mark id stored in the URL so a share link opens at the right moment.
-- Keyboard shortcuts that don't clash with screen readers, playback speed, an EN/AR UI with `dir` switching.
+- Marks on a real backend, with ids in share links instead of the whole mark, plus author and timestamps.
+- Render the chosen language on the server (cookie), and translate the latency numbers' units.
+- Test with NVDA and VoiceOver; so far only the markup has been checked, with a headless Chrome script.
 - A lower-confidence word stretch goal ("misheard vs misunderstood").
 
 ## Decision log

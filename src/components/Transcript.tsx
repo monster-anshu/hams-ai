@@ -3,13 +3,23 @@
 import { useRef, type MouseEvent, type RefObject } from "react";
 import { useActiveWord } from "@/hooks/useActiveWord";
 import { useFollowPlayback } from "@/hooks/useFollowPlayback";
+import { useLocale } from "@/hooks/useLocale";
 import type { CallRecord } from "@/lib/call";
 import type { TurnLatency } from "@/lib/latency";
+import type { Mark } from "@/lib/marks";
+import { seekTo } from "@/lib/player";
 import { TurnList } from "./TurnList";
 
-type Props = { call: CallRecord; latencies: Map<string, TurnLatency>; audioRef: RefObject<HTMLAudioElement | null> };
+type Props = {
+  call: CallRecord;
+  latencies: Map<string, TurnLatency>;
+  marks: Mark[];
+  activeMarkId: string | null;
+  audioRef: RefObject<HTMLAudioElement | null>;
+};
 
-export function Transcript({ call, latencies, audioRef }: Props) {
+export function Transcript({ call, latencies, marks, activeMarkId, audioRef }: Props) {
+  const { m } = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLElement | null>(null);
   const spansRef = useRef<NodeListOf<HTMLElement> | null>(null);
@@ -26,9 +36,11 @@ export function Transcript({ call, latencies, audioRef }: Props) {
   });
 
   const seek = (e: MouseEvent) => {
+    // A drag-select ends with a click; that's for marking, not seeking.
+    if (!window.getSelection()?.isCollapsed) return;
     const target = (e.target as HTMLElement).closest<HTMLElement>("[data-start]");
     if (!target || !audioRef.current) return;
-    audioRef.current.currentTime = Number(target.dataset.start) / 1000;
+    seekTo(audioRef.current, Number(target.dataset.start));
     setFollowing(true);
   };
 
@@ -38,17 +50,23 @@ export function Transcript({ call, latencies, audioRef }: Props) {
   };
 
   return (
-    <section aria-label="Transcript" className="relative min-h-0 flex-1">
-      <div ref={scrollRef} tabIndex={0} onClick={seek} className="h-full overflow-y-auto rounded-lg border border-zinc-200 p-4">
-        <TurnList turns={call.turns} latencies={latencies} scaleMs={scaleMs} />
+    <section aria-label={m.transcript} className="relative min-h-[60dvh] flex-1 lg:min-h-0">
+      <div
+        ref={scrollRef}
+        tabIndex={0}
+        data-transcript
+        onClick={seek}
+        className="absolute inset-0 overflow-y-auto rounded-lg border border-zinc-500/30 p-4 focus-visible:outline-2 focus-visible:outline-indigo-500"
+      >
+        <TurnList turns={call.turns} latencies={latencies} scaleMs={scaleMs} marks={marks} activeMarkId={activeMarkId} />
       </div>
       {!following && (
         <button
           type="button"
           onClick={resume}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-zinc-900 px-4 py-2 text-sm text-white shadow"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-zinc-900 px-4 py-2 text-sm text-white shadow dark:bg-zinc-100 dark:text-zinc-900"
         >
-          Back to playback
+          {m.backToPlayback}
         </button>
       )}
     </section>

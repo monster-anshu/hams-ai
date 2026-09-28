@@ -5,10 +5,11 @@ import sampleLatency from "../../data/latency.json";
 import sampleTools from "../../data/tools.json";
 import sampleTranscript from "../../public/transcript.json";
 import { fromTranscript, type RawTranscript } from "./call";
+import type { Messages } from "./i18n";
 import { matchLatencies, type LatencyReport, type ToolReport } from "./latency";
 
 type CallSource = {
-  title: string;
+  titleKey: keyof Messages;
   audioUrl: string;
   transcript: RawTranscript;
   latency: LatencyReport;
@@ -19,7 +20,7 @@ type CallSource = {
 
 export const CALLS: Record<string, CallSource> = {
   sample: {
-    title: "Sample call (recorded)",
+    titleKey: "sampleCall",
     audioUrl: "/sample.wav",
     transcript: sampleTranscript as RawTranscript,
     latency: sampleLatency as LatencyReport,
@@ -28,7 +29,7 @@ export const CALLS: Record<string, CallSource> = {
     scale: 1.131,
   },
   long: {
-    title: "45-minute call (generated)",
+    titleKey: "longCall",
     audioUrl: "/calls/long.m4a",
     transcript: longTranscript as RawTranscript,
     latency: longLatency as LatencyReport,
@@ -41,7 +42,6 @@ export function loadCall(id: string) {
   const source = CALLS[id];
   if (!source) return null;
   return {
-    title: source.title,
     call: fromTranscript(source.transcript, source.audioUrl, source.scale),
     latencies: matchLatencies(source.latency, source.transcript.response.turns, source.tools),
   };

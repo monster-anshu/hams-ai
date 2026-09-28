@@ -1,19 +1,22 @@
 import type { ToolStatus } from "@/lib/latency";
 
 const STATUS = {
-  ok: { icon: "✓", label: "success", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
-  error: { icon: "✕", label: "failed", className: "border-red-200 bg-red-50 text-red-800" },
-  timeout: { icon: "⏱", label: "timed out", className: "border-red-200 bg-red-50 text-red-800" },
-} satisfies Record<ToolStatus, { icon: string; label: string; className: string }>;
+  ok: { icon: "✓", className: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" },
+  error: { icon: "✕", className: "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300" },
+  timeout: { icon: "⏱", className: "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300" },
+} satisfies Record<ToolStatus, { icon: string; className: string }>;
 
-export function ToolChip({ name, status }: { name: string; status: ToolStatus }) {
+export function ToolChip({ name, status, statusLabel }: { name: string; status: ToolStatus; statusLabel: string }) {
   const s = STATUS[status];
+
   return (
     <span className={`inline-flex items-center gap-1 rounded border px-1.5 text-xs ${s.className}`}>
       <WrenchIcon />
-      <span className="font-mono">{name}</span>
+      <span dir="ltr" className="font-mono">
+        {name}
+      </span>
       <span aria-hidden>{s.icon}</span>
-      <span>{s.label}</span>
+      <span>{statusLabel}</span>
     </span>
   );
 }

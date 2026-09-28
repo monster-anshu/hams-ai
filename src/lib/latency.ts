@@ -1,4 +1,5 @@
-import type { RawTurn } from "./call";
+import type { RawTurn, Turn } from "./call";
+import type { Messages } from "./i18n";
 
 export const SLOW_MS = 1000;
 
@@ -6,14 +7,6 @@ export const SLOW_MS = 1000;
 // "other" is whatever the platform measured end to end but no stage accounts for.
 export const STAGES = ["stt", "llm", "tool", "tts", "other"] as const;
 export type Stage = (typeof STAGES)[number];
-
-export const STAGE_LABELS: Record<Stage, string> = {
-  stt: "Speech recognition",
-  llm: "Model first token",
-  tool: "Tools",
-  tts: "First audio",
-  other: "Network / other",
-};
 
 export type ToolStatus = "ok" | "error" | "timeout";
 
@@ -110,10 +103,25 @@ export function formatMs(ms: number) {
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
 }
 
-export function describeLatency({ perceivedMs, stages, tool }: TurnLatency) {
+export function describeLatency({ perceivedMs, stages, tool }: TurnLatency, m: Messages) {
   const parts = STAGES.filter((s) => stages[s] > 0).map((s) => {
-    const label = s === "tool" && tool ? `${tool.name} (${tool.status})` : STAGE_LABELS[s];
+    const label = s === "tool" && tool ? `${tool.name} (${m[tool.status]})` : m[s];
     return `${label} ${formatMs(stages[s])}`;
   });
   return `${formatMs(perceivedMs)}: ${parts.join(", ")}`;
+}
+
+export type SlowReply = { turn: Turn; latency: TurnLatency; silenceStartMs: number };
+
+export function slowReplies(turns: Turn[], latencies: Map<string, TurnLatency>): SlowReply[] {
+  return turns.flatMap((turn) => {
+    const latency = latencies.get(turn.id);
+    if (!latency || latency.perceivedMs < SLOW_MS) return [];
+    return [{ turn, latency, silenceStartMs: Math.max(0, turn.startMs - latency.perceivedMs) }];
+  });
+}
+
+// First slow reply whose silence starts after `afterMs`, wrapping to the start of the call.
+export function nextSlowReply(replies: SlowReply[], afterMs: number): SlowReply | null {
+  return replies.find((r) => r.silenceStartMs > afterMs) ?? replies[0] ?? null;
 }
