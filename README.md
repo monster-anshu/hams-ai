@@ -199,7 +199,7 @@ On the long call, `اسعار` finds both `أسعار` and `الاسعار` (59 
 - **Auto-scroll only outside the middle band.** Scrolling on every word makes the view jitter. Scrolling only when the word leaves the middle 50% keeps it calm.
 - **Time scale 1.131 for the sample call (`src/lib/calls.ts`).** The transcript covers ~258s but the wav is ~294s. I matched turn starts to the silences `ffmpeg silencedetect` found and settled on one linear factor. Without it, the highlight ends up ~36s ahead of the voice by the end of the call.
 - **Per-turn aggregates, not the brief's `PipelineEvent` stream.** The real platform reports latency per turn, so I model that directly instead of inventing events to fit the brief's shape. `CallRecord.events` stays empty.
-- **Latency from the platform, not transcript gaps.** Transcript gaps said ~150ms. The platform's `user_stops_speaking` lands ~400ms before the transcript's `end_time`, so the gaps undercounted by ~4×.
+- **Latency from the platform, not transcript gaps.** Transcript gaps averaged ~270ms against the platform's ~700ms. The platform's `user_stops_speaking` lands ~400ms before the transcript's `end_time`, so the gaps undercounted by ~2.5×.
 - **Tool time carved out of `network_latency_ms`.** The platform has no tool spans. A slow tool shows up as unaccounted time, so dummy tool durations are taken from that remainder rather than added on top. That keeps the total equal to what the caller heard.
 - **Generated audio instead of looping `sample.wav`.** Looping the real recording gives ~600 turns in 45 minutes, not ~1,200, and the transcript wouldn't match the words. Synthesising the audio lets every word in the transcript actually be spoken at its timestamp.
 - **Share links carry the whole mark.** A mark id alone would need a backend to look it up. The trade-off is a longer URL, and a comment that's readable by anyone with the link.
@@ -237,9 +237,22 @@ On the long call, `اسعار` finds both `أسعار` and `الاسعار` (59 
 
 ## Decision log
 
-| Decision                                                      | Why                                                     | Commit |
-| ------------------------------------------------------------- | ------------------------------------------------------- | ------ |
-| rAF loop + direct class change for the active word            | Avoid re-rendering the whole transcript during playback | _TODO_ |
-| Linear time scale to line the sample transcript up with audio | Transcript and wav durations drift ~13%                 | _TODO_ |
-| _Changed:_ turn-gap latency → platform `ub_latency_ms`        | Gaps undercounted by ~4× once real data arrived         | _TODO_ |
-| _Changed my mind:_ _TODO_                                     | _TODO_                                                  | _TODO_ |
+| Decision                                                                               | Why                                                                                                                   | Commit                |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| rAF loop + direct class change for the active word                                     | The transcript never re-renders during playback, so 1,200 turns stay at 60fps                                         | `123b4f5`             |
+| Linear time scale (×1.131) to line the sample transcript up with the audio             | Transcript and wav durations drift ~13%                                                                               | `123b4f5`             |
+| _Changed my mind:_ transcript turn gaps → platform `ub_latency_ms`                     | See below                                                                                                             | `123b4f5` → `574e28c` |
+| Tool time carved out of `network_latency_ms`, shown as "other"                         | The platform has no tool stage, and tool time must not be counted twice                                               | `574e28c`             |
+| Generate the 45-minute call with macOS `say` + ffmpeg, samples placed at exact offsets | Real audio with known word timings, and the 6s silence is verifiable with `silencedetect`                             | `4deaed7`             |
+| One shared rAF loop (`usePlaybackFrame`) for word sync, timeline and playhead          | Two loops read the same `currentTime`, so merge them                                                                  | `39dee98`             |
+| `localStorage` and `location.search` read through `useSyncExternalStore`               | Pages are static, so reading them during render caused hydration mismatches                                           | `39dee98`             |
+| Messages passed down as a prop, not `useLocale()` in every row                         | ~1,200 store subscriptions on the long call                                                                           | `39dee98`             |
+| Alt+Shift shortcuts matched on `event.code`                                            | No clash with screen-reader keys, and they still work on an Arabic keyboard layout                                    | `39dee98`             |
+| Own `normalizeArabic` (NFD + strip marks) instead of a library                         | About 10 lines. Libraries cover only part of the rules, and the brief wants it tested                                 | `1505737`             |
+| Defer virtualisation                                                                   | The long page is 200KB gzipped and playback doesn't re-render. Virtualising breaks word index = span index and Ctrl+F | `1505737`             |
+
+### Changed my mind: where latency comes from
+
+My first version (`123b4f5`) measured perceived latency as the gap between the end of the customer's turn and the start of the agent's turn in the transcript. It was simple and needed no extra data. When the real platform data arrived, it didn't match. The gaps averaged ~270ms, while the platform's `ub_latency_ms` averaged ~700ms. The transcript's `end_time` lags the platform's `user_stops_speaking` by ~400ms, so the gaps undercounted by about 2.5×, which is exactly the error that hides a slow agent.
+
+In `574e28c` I switched to the platform numbers and matched each one to its transcript turn by the nearest `bot_starts_speaking`. The platform also gives the stage breakdown (STT, LLM, TTS), which turn gaps never could. Lesson: measure the interval the caller experiences, from the system that sees it, not from a derived one.
