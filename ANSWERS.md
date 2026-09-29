@@ -213,3 +213,19 @@ I deliberately ignored a few things:
 The reel is a trade-off: showing Lama five moments means hiding the rest. The call that worries me most is the calm, wrong one. The bot quotes the wrong refund amount, the customer says "great, thanks," and nothing looks off. No frustration, no silence, no escalation. It never makes the reel, and it might be the worst call of the day.
 
 To catch it, I'd check every "promise made" tag (amounts, dates, policies) against the tool results and the knowledge base, and flag anything that doesn't match, however happy the customer sounded. I'd also make one of the five clips a random pick from the low-scored calls, so the system can never fully hide something from her. And I'd give Lama a "this should have been flagged" button, because she'll spot patterns the rules miss, and that's how the rules get better.
+
+## 3.2 Your corner of the web
+
+I added a LiveKit transport to Pipecat's web client ([#86](https://github.com/pipecat-ai/pipecat-client-web-transports/pull/86), merged via [#171](https://github.com/pipecat-ai/pipecat-client-web-transports/pull/171)). It lets a browser voice agent built on `@pipecat-ai/client-js` run over LiveKit's WebRTC infrastructure instead of peer-to-peer WebRTC, so teams already on LiveKit can use Pipecat without changing their media stack.
+
+It grabbed me because I was using both, and the missing piece was on the frontend. The transport maps LiveKit's room, tracks and data channels onto Pipecat's transport lifecycle: auth, device switching, mic/cam/screen share, and RTVI messages over data channels.
+
+The interesting bugs were all about timing:
+
+- Tracks created before joining were dropped during connect.
+- An abort that landed after publishing, but before "connected", left the call half-open.
+- Every data-channel message was treated as RTVI until I filtered to `rtvi-ai` only.
+
+None of that shows up in a demo. It shows up when a real user clicks "call" twice.
+
+The maintainers carried it over the line. They rebuilt device/track management and the disconnect cleanup before merging, and reading their changes taught me as much as writing mine.
