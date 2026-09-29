@@ -174,3 +174,42 @@ I'd add three things:
 - a test-run simulator that chats with the draft bot and lights up the path it takes
 
 The simulator mattered most. Users understood their flow by watching it run, not by reading it.
+
+## 3.1 Two hundred calls before lunch
+
+My first instinct was a dashboard, but Lama doesn't need another screen of 200 rows to scan. She needs someone to hand her the five moments that matter and say "start here." So that's what I'd build: a highlight reel.
+
+After every call ends, it goes through a post-call pipeline. Most calls already have what it needs from the live call: the transcript with word-level timestamps and recognition confidence, the pipeline timings and the tool results. If a call has no transcript (the live speech-to-text failed, or the audio came from outside the platform), the pipeline runs speech-to-text on the recording first. A set of simple rules then marks anything suspicious: the customer interrupting the bot, long silences, tool errors, someone asking for a human. Finally, an LLM reads the transcript alongside those marks and writes a short summary of the call, tags the key moments, and scores how badly it went.
+
+The five worst calls each contribute their most important 20 seconds, and those clips are stitched into one playlist. Lama presses play and hears the day's problems in under two minutes, each clip introduced by a one-line reason like "Customer asked for a human three times." If something worries her, one click opens the full call in the transcript panel from Part 1, right at that second.
+
+**Tags make the call skimmable**
+
+Beyond the summary, each call gets moment tags: "1:10–1:20 showed interest in product," "2:05–2:25 price objection," "4:10–4:20 bot promised a refund." I'd keep these to a fixed list of about eight labels. If you let the LLM invent its own, you end up with fifty slightly different versions of "customer was annoyed."
+
+The tags do a lot of work. The 20-second clip is simply the call's most serious tag. Lama can see the shape of a call at a glance without reading it. And she can ask something like "show me every price objection today" and hear them back to back, which is often more useful than any single call. Good moments get tagged too, so she sees what's working, not only what broke.
+
+**What I'm listening for, and what I'm not**
+
+The signals I trust are the ones that show something actually went wrong:
+
+- the call got transferred to a human
+- the customer hung up on the bot
+- the same number called back within the hour
+- sentiment dropped sharply
+- the customer kept repeating themselves
+- the bot hit a tool error or went silent for several seconds
+- words like refund, cancel or complaint came up
+
+I deliberately ignored a few things:
+
+- **Call length.** It's tempting, but long calls are usually just complicated, not bad.
+- **Average sentiment.** It hides the one angry minute at the end.
+- **Accent, language and caller details.** They say nothing about call quality and only add bias.
+- **An LLM score out of ten on its own.** It isn't consistent. So the rules find the moments, and the LLM judges and explains them.
+
+**Where this can fail**
+
+The reel is a trade-off: showing Lama five moments means hiding the rest. The call that worries me most is the calm, wrong one. The bot quotes the wrong refund amount, the customer says "great, thanks," and nothing looks off. No frustration, no silence, no escalation. It never makes the reel, and it might be the worst call of the day.
+
+To catch it, I'd check every "promise made" tag (amounts, dates, policies) against the tool results and the knowledge base, and flag anything that doesn't match, however happy the customer sounded. I'd also make one of the five clips a random pick from the low-scored calls, so the system can never fully hide something from her. And I'd give Lama a "this should have been flagged" button, because she'll spot patterns the rules miss, and that's how the rules get better.
