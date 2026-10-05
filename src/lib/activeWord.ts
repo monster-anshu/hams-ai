@@ -2,11 +2,17 @@ import type { Word } from "./call";
 
 // Turns can overlap (barge-ins), so the flat word list isn't guaranteed sorted.
 export function sortByStart(words: Word[]): number[] {
-  return words.map((_, i) => i).sort((a, b) => words[a].startMs - words[b].startMs);
+  return words
+    .map((_, i) => i)
+    .sort((a, b) => words[a].startMs - words[b].startMs);
 }
 
 // Index of the word playing at `ms`, or -1 during silence.
-export function findActiveWord(words: Word[], order: number[], ms: number): number {
+export function findActiveWord(
+  words: Word[],
+  order: number[],
+  ms: number,
+): number {
   let lo = 0;
   let hi = order.length - 1;
   let hit = -1;

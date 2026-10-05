@@ -19,9 +19,14 @@ export function CallList({ calls }: { calls: Item[] }) {
       <ul className="flex flex-col gap-2">
         {calls.map((call) => (
           <li key={call.id}>
-            <Link href={`/calls/${call.id}`} className="block rounded-lg border border-zinc-500/30 px-4 py-3 hover:bg-zinc-500/10">
+            <Link
+              href={`/calls/${call.id}`}
+              className="block rounded-lg border border-zinc-500/30 px-4 py-3 hover:bg-zinc-500/10"
+            >
               <span className="font-medium">{m[call.titleKey]}</span>
-              <span className="ms-2 text-sm text-zinc-500">{format(m.turnsCount, { n: call.turns })}</span>
+              <span className="ms-2 text-sm text-zinc-500">
+                {format(m.turnsCount, { n: call.turns })}
+              </span>
             </Link>
           </li>
         ))}

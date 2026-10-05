@@ -8,8 +8,14 @@ import { formatTime } from "@/lib/time";
 // Start a second before the silence, so you hear the caller finish and the gap begin.
 const LEAD_MS = 1000;
 
-export function usePlayerActions(audioRef: RefObject<HTMLAudioElement | null>, slow: SlowReply[], m: Messages, announce: (text: string) => void) {
-  const withAudio = (fn: (audio: HTMLAudioElement) => void) => () => audioRef.current && fn(audioRef.current);
+export function usePlayerActions(
+  audioRef: RefObject<HTMLAudioElement | null>,
+  slow: SlowReply[],
+  m: Messages,
+  announce: (text: string) => void,
+) {
+  const withAudio = (fn: (audio: HTMLAudioElement) => void) => () =>
+    audioRef.current && fn(audioRef.current);
   const now = (audio: HTMLAudioElement) => audio.currentTime * 1000;
 
   const changeSpeed = (direction: 1 | -1) =>
@@ -32,7 +38,12 @@ export function usePlayerActions(audioRef: RefObject<HTMLAudioElement | null>, s
       const reply = nextSlowReply(slow, now(audio) + LEAD_MS + 100);
       if (!reply) return announce(m.noSlow);
       seekTo(audio, reply.silenceStartMs - LEAD_MS);
-      announce(format(m.slowAt, { time: formatTime(reply.silenceStartMs), latency: formatMs(reply.latency.perceivedMs) }));
+      announce(
+        format(m.slowAt, {
+          time: formatTime(reply.silenceStartMs),
+          latency: formatMs(reply.latency.perceivedMs),
+        }),
+      );
     }),
   };
 }

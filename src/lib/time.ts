@@ -8,7 +8,9 @@ export function formatTime(ms: number, tenths = false) {
 
 // Parses "m:ss" or "m:ss.d", in Latin or Arabic-Indic digits. Returns null when invalid.
 export function parseTime(input: string): number | null {
-  const match = toLatinDigits(input.trim()).match(/^(\d+):([0-5]\d)(?:\.(\d))?$/);
+  const match = toLatinDigits(input.trim()).match(
+    /^(\d+):([0-5]\d)(?:\.(\d))?$/,
+  );
   if (!match) return null;
   const [, m, s, tenths = "0"] = match;
   return (Number(m) * 60 + Number(s)) * 1000 + Number(tenths) * 100;

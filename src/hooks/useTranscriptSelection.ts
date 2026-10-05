@@ -30,11 +30,17 @@ function readSelection(turns: Turn[]): Range | null {
   const node = range.commonAncestorContainer;
   const el = node instanceof Element ? node : node.parentElement!;
   const single = el.closest<HTMLElement>("[data-word]");
-  const hits = single ? [single] : [...el.querySelectorAll<HTMLElement>("[data-word]")].filter((w) => range.intersectsNode(w));
+  const hits = single
+    ? [single]
+    : [...el.querySelectorAll<HTMLElement>("[data-word]")].filter((w) =>
+        range.intersectsNode(w),
+      );
   if (hits.length === 0) return null;
 
   const starts = hits.map((w) => Number(w.dataset.start));
   const lastStart = Math.max(...starts);
-  const lastWord = turns.flatMap((t) => t.words).find((w) => w.startMs === lastStart);
+  const lastWord = turns
+    .flatMap((t) => t.words)
+    .find((w) => w.startMs === lastStart);
   return { startMs: Math.min(...starts), endMs: lastWord?.endMs ?? lastStart };
 }

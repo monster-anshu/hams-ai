@@ -26,10 +26,17 @@ function read(key: string) {
 
 export function useMarks(callId: string) {
   const key = `hams:marks:${callId}`;
-  const marks = useSyncExternalStore(subscribe, () => read(key), () => EMPTY);
+  const marks = useSyncExternalStore(
+    subscribe,
+    () => read(key),
+    () => EMPTY,
+  );
 
   const write = (next: Mark[]) => {
-    localStorage.setItem(key, JSON.stringify(next.toSorted((a, b) => a.startMs - b.startMs)));
+    localStorage.setItem(
+      key,
+      JSON.stringify(next.toSorted((a, b) => a.startMs - b.startMs)),
+    );
     window.dispatchEvent(new Event(EVENT));
   };
 

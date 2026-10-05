@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "]);
+const SCROLL_KEYS = new Set([
+  "ArrowUp",
+  "ArrowDown",
+  "PageUp",
+  "PageDown",
+  "Home",
+  "End",
+  " ",
+]);
 
 // Stops following on user-initiated scrolls only; our own scrollIntoView calls don't count.
 export function useFollowPlayback(containerRef: RefObject<HTMLElement | null>) {

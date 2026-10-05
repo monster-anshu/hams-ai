@@ -153,6 +153,11 @@ const ar: Messages = {
 
 export const MESSAGES: Record<Locale, Messages> = { en, ar };
 
-export function format(template: string, values: Record<string, string | number>) {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`));
+export function format(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (_, key: string) =>
+    String(values[key] ?? `{${key}}`),
+  );
 }

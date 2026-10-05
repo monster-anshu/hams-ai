@@ -24,7 +24,10 @@ export function ShortcutHelp() {
         {SHORTCUTS.map((s) => (
           <Fragment key={s.action}>
             <dt>
-              <kbd dir="ltr" className="rounded bg-zinc-500/15 px-1.5 font-mono text-xs">
+              <kbd
+                dir="ltr"
+                className="rounded bg-zinc-500/15 px-1.5 font-mono text-xs"
+              >
                 {s.keys}
               </kbd>
             </dt>

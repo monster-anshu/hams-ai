@@ -18,27 +18,41 @@ type Props = {
   audioRef: RefObject<HTMLAudioElement | null>;
 };
 
-export function Transcript({ call, latencies, marks, activeMarkId, audioRef }: Props) {
+export function Transcript({
+  call,
+  latencies,
+  marks,
+  activeMarkId,
+  audioRef,
+}: Props) {
   const { m } = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLElement | null>(null);
   const spansRef = useRef<NodeListOf<HTMLElement> | null>(null);
-  const { following, followingRef, setFollowing } = useFollowPlayback(scrollRef);
+  const { following, followingRef, setFollowing } =
+    useFollowPlayback(scrollRef);
   const words = call.turns.flatMap((t) => t.words);
-  const scaleMs = Math.max(0, ...[...latencies.values()].map((l) => l.perceivedMs));
+  const scaleMs = Math.max(
+    0,
+    ...[...latencies.values()].map((l) => l.perceivedMs),
+  );
 
   useActiveWord(audioRef, words, (i) => {
-    spansRef.current ??= scrollRef.current!.querySelectorAll<HTMLElement>("[data-word]");
+    spansRef.current ??=
+      scrollRef.current!.querySelectorAll<HTMLElement>("[data-word]");
     activeRef.current?.classList.remove("word-active");
     activeRef.current = i >= 0 ? spansRef.current[i] : null;
     activeRef.current?.classList.add("word-active");
-    if (followingRef.current) scrollIntoCenter(scrollRef.current!, activeRef.current);
+    if (followingRef.current)
+      scrollIntoCenter(scrollRef.current!, activeRef.current);
   });
 
   const seek = (e: MouseEvent) => {
     // A drag-select ends with a click; that's for marking, not seeking.
     if (!window.getSelection()?.isCollapsed) return;
-    const target = (e.target as HTMLElement).closest<HTMLElement>("[data-start]");
+    const target = (e.target as HTMLElement).closest<HTMLElement>(
+      "[data-start]",
+    );
     if (!target || !audioRef.current) return;
     seekTo(audioRef.current, Number(target.dataset.start));
     setFollowing(true);
@@ -50,7 +64,10 @@ export function Transcript({ call, latencies, marks, activeMarkId, audioRef }: P
   };
 
   return (
-    <section aria-label={m.transcript} className="relative min-h-[60dvh] flex-1 lg:min-h-0">
+    <section
+      aria-label={m.transcript}
+      className="relative min-h-[60dvh] flex-1 lg:min-h-0"
+    >
       <div
         ref={scrollRef}
         tabIndex={0}
@@ -58,7 +75,13 @@ export function Transcript({ call, latencies, marks, activeMarkId, audioRef }: P
         onClick={seek}
         className="absolute inset-0 overflow-y-auto rounded-lg border border-zinc-500/30 p-4 focus-visible:outline-2 focus-visible:outline-indigo-500"
       >
-        <TurnList turns={call.turns} latencies={latencies} scaleMs={scaleMs} marks={marks} activeMarkId={activeMarkId} />
+        <TurnList
+          turns={call.turns}
+          latencies={latencies}
+          scaleMs={scaleMs}
+          marks={marks}
+          activeMarkId={activeMarkId}
+        />
       </div>
       {!following && (
         <button

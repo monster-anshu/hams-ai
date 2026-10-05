@@ -4,7 +4,11 @@ import type { Word } from "@/lib/call";
 import { usePlaybackFrame } from "./usePlaybackFrame";
 
 // Calls onChange only when the active word changes, not on every frame.
-export function useActiveWord(audioRef: RefObject<HTMLAudioElement | null>, words: Word[], onChange: (index: number) => void) {
+export function useActiveWord(
+  audioRef: RefObject<HTMLAudioElement | null>,
+  words: Word[],
+  onChange: (index: number) => void,
+) {
   const order = sortByStart(words);
   const current = useRef(-1);
 

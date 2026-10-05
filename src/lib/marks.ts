@@ -1,10 +1,20 @@
-export type Mark = { id: string; startMs: number; endMs: number; label: string; comment: string };
+export type Mark = {
+  id: string;
+  startMs: number;
+  endMs: number;
+  label: string;
+  comment: string;
+};
 
 export const SHARED_MARK_ID = "shared";
 const MAX_LABEL = 60;
 const MAX_COMMENT = 1000;
 
-export function overlaps(mark: Pick<Mark, "startMs" | "endMs">, startMs: number, endMs: number) {
+export function overlaps(
+  mark: Pick<Mark, "startMs" | "endMs">,
+  startMs: number,
+  endMs: number,
+) {
   return startMs < mark.endMs && endMs > mark.startMs;
 }
 
@@ -14,7 +24,10 @@ export function isSameMark(a: Mark, b: Mark) {
 
 // Everything the recipient needs lives in the URL: there is no backend to look a mark up in.
 export function markToSearch(mark: Mark) {
-  const params = new URLSearchParams({ mark: `${mark.startMs}-${mark.endMs}`, label: mark.label });
+  const params = new URLSearchParams({
+    mark: `${mark.startMs}-${mark.endMs}`,
+    label: mark.label,
+  });
   if (mark.comment) params.set("note", mark.comment);
   return params.toString();
 }
@@ -28,7 +41,13 @@ export function markFromSearch(search: string): Mark | null {
   const startMs = Number(range[1]);
   const endMs = Number(range[2]);
   if (endMs <= startMs) return null;
-  return { id: SHARED_MARK_ID, startMs, endMs, label, comment: (params.get("note") ?? "").slice(0, MAX_COMMENT) };
+  return {
+    id: SHARED_MARK_ID,
+    startMs,
+    endMs,
+    label,
+    comment: (params.get("note") ?? "").slice(0, MAX_COMMENT),
+  };
 }
 
 // Stored marks come from localStorage, so anything malformed is dropped rather than trusted.

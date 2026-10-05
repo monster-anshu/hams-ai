@@ -1,974 +1,974 @@
 {
-    "success": true,
-    "response": {
-        "call_id": "01a0e894-44e3-71b0-8233-abfc3d93f876",
-        "average_stt_latency_ms_per_call": 361,
-        "average_tts_latency_ms_per_call": 101,
-        "average_llm_latency_ms_per_call": 58,
-        "average_total_turn_latency_ms_per_call": 517,
-        "average_perceived_latency_ms_per_call": 701,
-        "turn_count": 29,
-        "spike_turn_count": 0,
-        "latency_volatility": 39,
-        "turns": [
-            {
-                "turn_id": "ab5dc73625c4c123",
-                "sequence": 2,
-                "ub_latency_ms": 613,
-                "network_latency_ms": 87,
-                "user_stops_speaking": "2026-09-28T15:13:56.487Z",
-                "bot_starts_speaking": "2026-09-28T15:13:57.100Z",
-                "total_latency_ms_per_turn": 526,
-                "average_llm_latency_ms_per_turn": 45,
-                "average_stt_latency_ms_per_turn": 385,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 385,
-                "first_tts_ms": 96,
-                "last_llm_ms": 45,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 385,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 45,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "9b549428edd90639",
-                "sequence": 3,
-                "ub_latency_ms": 531,
-                "network_latency_ms": 28,
-                "user_stops_speaking": "2026-09-28T15:14:03.357Z",
-                "bot_starts_speaking": "2026-09-28T15:14:03.888Z",
-                "total_latency_ms_per_turn": 503,
-                "average_llm_latency_ms_per_turn": 42,
-                "average_stt_latency_ms_per_turn": 364,
-                "average_tts_latency_ms_per_turn": 97,
-                "last_stt_ms": 364,
-                "first_tts_ms": 97,
-                "last_llm_ms": 42,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 364,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 42,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 97,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "c2c67726b6f2c19e",
-                "sequence": 4,
-                "ub_latency_ms": 622,
-                "network_latency_ms": 111,
-                "user_stops_speaking": "2026-09-28T15:14:11.197Z",
-                "bot_starts_speaking": "2026-09-28T15:14:11.819Z",
-                "total_latency_ms_per_turn": 511,
-                "average_llm_latency_ms_per_turn": 39,
-                "average_stt_latency_ms_per_turn": 374,
-                "average_tts_latency_ms_per_turn": 98,
-                "last_stt_ms": 374,
-                "first_tts_ms": 98,
-                "last_llm_ms": 39,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 374,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 39,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 98,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "3fe90829ed15652c",
-                "sequence": 5,
-                "ub_latency_ms": 523,
-                "network_latency_ms": 23,
-                "user_stops_speaking": "2026-09-28T15:14:18.557Z",
-                "bot_starts_speaking": "2026-09-28T15:14:19.080Z",
-                "total_latency_ms_per_turn": 500,
-                "average_llm_latency_ms_per_turn": 41,
-                "average_stt_latency_ms_per_turn": 364,
-                "average_tts_latency_ms_per_turn": 95,
-                "last_stt_ms": 364,
-                "first_tts_ms": 95,
-                "last_llm_ms": 41,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 364,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 41,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 95,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "22791491dcd5d53f",
-                "sequence": 6,
-                "ub_latency_ms": 541,
-                "network_latency_ms": 23,
-                "user_stops_speaking": "2026-09-28T15:14:25.217Z",
-                "bot_starts_speaking": "2026-09-28T15:14:25.758Z",
-                "total_latency_ms_per_turn": 518,
-                "average_llm_latency_ms_per_turn": 43,
-                "average_stt_latency_ms_per_turn": 372,
-                "average_tts_latency_ms_per_turn": 103,
-                "last_stt_ms": 372,
-                "first_tts_ms": 103,
-                "last_llm_ms": 43,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 372,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 43,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 103,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "71f8fa73a771a477",
-                "sequence": 7,
-                "ub_latency_ms": 628,
-                "network_latency_ms": 100,
-                "user_stops_speaking": "2026-09-28T15:14:34.637Z",
-                "bot_starts_speaking": "2026-09-28T15:14:35.264Z",
-                "total_latency_ms_per_turn": 528,
-                "average_llm_latency_ms_per_turn": 81,
-                "average_stt_latency_ms_per_turn": 354,
-                "average_tts_latency_ms_per_turn": 112,
-                "last_stt_ms": 335,
-                "first_tts_ms": 112,
-                "last_llm_ms": 81,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 707,
-                        "count": 2
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 81,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 112,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "09d61785a97e2646",
-                "sequence": 8,
-                "ub_latency_ms": 476,
-                "network_latency_ms": 26,
-                "user_stops_speaking": "2026-09-28T15:14:40.276Z",
-                "bot_starts_speaking": "2026-09-28T15:14:40.753Z",
-                "total_latency_ms_per_turn": 450,
-                "average_llm_latency_ms_per_turn": 43,
-                "average_stt_latency_ms_per_turn": 311,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 311,
-                "first_tts_ms": 96,
-                "last_llm_ms": 43,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 311,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 43,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "a77851c0865fc1b7",
-                "sequence": 9,
-                "ub_latency_ms": 530,
-                "network_latency_ms": 39,
-                "user_stops_speaking": "2026-09-28T15:14:47.287Z",
-                "bot_starts_speaking": "2026-09-28T15:14:47.818Z",
-                "total_latency_ms_per_turn": 491,
-                "average_llm_latency_ms_per_turn": 44,
-                "average_stt_latency_ms_per_turn": 351,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 351,
-                "first_tts_ms": 96,
-                "last_llm_ms": 44,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 351,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 44,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "a406ac9dc1274a61",
-                "sequence": 10,
-                "ub_latency_ms": 574,
-                "network_latency_ms": 63,
-                "user_stops_speaking": "2026-09-28T15:14:54.856Z",
-                "bot_starts_speaking": "2026-09-28T15:14:55.430Z",
-                "total_latency_ms_per_turn": 511,
-                "average_llm_latency_ms_per_turn": 44,
-                "average_stt_latency_ms_per_turn": 370,
-                "average_tts_latency_ms_per_turn": 97,
-                "last_stt_ms": 370,
-                "first_tts_ms": 97,
-                "last_llm_ms": 44,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 370,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 44,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 97,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "7e93d2a03a6a0de9",
-                "sequence": 11,
-                "ub_latency_ms": 2537,
-                "network_latency_ms": 2074,
-                "user_stops_speaking": "2026-09-28T15:15:01.867Z",
-                "bot_starts_speaking": "2026-09-28T15:15:04.403Z",
-                "total_latency_ms_per_turn": 463,
-                "average_llm_latency_ms_per_turn": 44,
-                "average_stt_latency_ms_per_turn": 321,
-                "average_tts_latency_ms_per_turn": 98,
-                "last_stt_ms": 321,
-                "first_tts_ms": 98,
-                "last_llm_ms": 44,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 321,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 44,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 98,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "847eb804ace44e83",
-                "sequence": 12,
-                "ub_latency_ms": 587,
-                "network_latency_ms": 48,
-                "user_stops_speaking": "2026-09-28T15:15:19.537Z",
-                "bot_starts_speaking": "2026-09-28T15:15:20.124Z",
-                "total_latency_ms_per_turn": 539,
-                "average_llm_latency_ms_per_turn": 81,
-                "average_stt_latency_ms_per_turn": 361,
-                "average_tts_latency_ms_per_turn": 97,
-                "last_stt_ms": 361,
-                "first_tts_ms": 97,
-                "last_llm_ms": 81,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 361,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 81,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 97,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "b80332dd39f43d9d",
-                "sequence": 13,
-                "ub_latency_ms": 514,
-                "network_latency_ms": 19,
-                "user_stops_speaking": "2026-09-28T15:15:25.787Z",
-                "bot_starts_speaking": "2026-09-28T15:15:26.300Z",
-                "total_latency_ms_per_turn": 495,
-                "average_llm_latency_ms_per_turn": 45,
-                "average_stt_latency_ms_per_turn": 351,
-                "average_tts_latency_ms_per_turn": 99,
-                "last_stt_ms": 351,
-                "first_tts_ms": 99,
-                "last_llm_ms": 45,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 351,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 45,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 99,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "defaf53b9fd71f45",
-                "sequence": 14,
-                "ub_latency_ms": 563,
-                "network_latency_ms": 49,
-                "user_stops_speaking": "2026-09-28T15:15:32.047Z",
-                "bot_starts_speaking": "2026-09-28T15:15:32.610Z",
-                "total_latency_ms_per_turn": 514,
-                "average_llm_latency_ms_per_turn": 48,
-                "average_stt_latency_ms_per_turn": 331,
-                "average_tts_latency_ms_per_turn": 135,
-                "last_stt_ms": 331,
-                "first_tts_ms": 135,
-                "last_llm_ms": 48,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 331,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 48,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 135,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "f7c8e4cda22f771b",
-                "sequence": 15,
-                "ub_latency_ms": 615,
-                "network_latency_ms": 199,
-                "user_stops_speaking": "2026-09-28T15:15:44.837Z",
-                "bot_starts_speaking": "2026-09-28T15:15:45.452Z",
-                "total_latency_ms_per_turn": 416,
-                "average_llm_latency_ms_per_turn": 62,
-                "average_stt_latency_ms_per_turn": 341,
-                "average_tts_latency_ms_per_turn": 50,
-                "last_stt_ms": 337,
-                "first_tts_ms": 2,
-                "last_llm_ms": 77,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 682,
-                        "count": 2
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 123,
-                        "count": 2
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 99,
-                        "count": 2
-                    }
-                ]
-            },
-            {
-                "turn_id": "7d506ddb6988764d",
-                "sequence": 16,
-                "ub_latency_ms": 606,
-                "network_latency_ms": 85,
-                "user_stops_speaking": "2026-09-28T15:15:49.097Z",
-                "bot_starts_speaking": "2026-09-28T15:15:49.702Z",
-                "total_latency_ms_per_turn": 521,
-                "average_llm_latency_ms_per_turn": 46,
-                "average_stt_latency_ms_per_turn": 375,
-                "average_tts_latency_ms_per_turn": 100,
-                "last_stt_ms": 375,
-                "first_tts_ms": 100,
-                "last_llm_ms": 46,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 375,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 46,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 100,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "0056e763bae5ac8b",
-                "sequence": 17,
-                "ub_latency_ms": 603,
-                "network_latency_ms": 97,
-                "user_stops_speaking": "2026-09-28T15:16:00.857Z",
-                "bot_starts_speaking": "2026-09-28T15:16:01.460Z",
-                "total_latency_ms_per_turn": 506,
-                "average_llm_latency_ms_per_turn": 49,
-                "average_stt_latency_ms_per_turn": 361,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 361,
-                "first_tts_ms": 96,
-                "last_llm_ms": 49,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 361,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 49,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "2c3439bda5d32952",
-                "sequence": 18,
-                "ub_latency_ms": 646,
-                "network_latency_ms": 57,
-                "user_stops_speaking": "2026-09-28T15:16:14.256Z",
-                "bot_starts_speaking": "2026-09-28T15:16:14.903Z",
-                "total_latency_ms_per_turn": 589,
-                "average_llm_latency_ms_per_turn": 91,
-                "average_stt_latency_ms_per_turn": 402,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 402,
-                "first_tts_ms": 96,
-                "last_llm_ms": 91,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 402,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 91,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "dc438588b0ec7023",
-                "sequence": 19,
-                "ub_latency_ms": 591,
-                "network_latency_ms": 68,
-                "user_stops_speaking": "2026-09-28T15:16:22.857Z",
-                "bot_starts_speaking": "2026-09-28T15:16:23.448Z",
-                "total_latency_ms_per_turn": 523,
-                "average_llm_latency_ms_per_turn": 51,
-                "average_stt_latency_ms_per_turn": 373,
-                "average_tts_latency_ms_per_turn": 97,
-                "last_stt_ms": 375,
-                "first_tts_ms": 97,
-                "last_llm_ms": 51,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 746,
-                        "count": 2
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 51,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 97,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "51c8f8f382314810",
-                "sequence": 20,
-                "ub_latency_ms": 1741,
-                "network_latency_ms": 1259,
-                "user_stops_speaking": "2026-09-28T15:16:24.437Z",
-                "bot_starts_speaking": "2026-09-28T15:16:26.178Z",
-                "total_latency_ms_per_turn": 482,
-                "average_llm_latency_ms_per_turn": 45,
-                "average_stt_latency_ms_per_turn": 337,
-                "average_tts_latency_ms_per_turn": 100,
-                "last_stt_ms": 337,
-                "first_tts_ms": 100,
-                "last_llm_ms": 45,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 337,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 45,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 100,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "b3b8ba50bd7acabe",
-                "sequence": 21,
-                "ub_latency_ms": 661,
-                "network_latency_ms": 109,
-                "user_stops_speaking": "2026-09-28T15:16:33.307Z",
-                "bot_starts_speaking": "2026-09-28T15:16:33.968Z",
-                "total_latency_ms_per_turn": 552,
-                "average_llm_latency_ms_per_turn": 90,
-                "average_stt_latency_ms_per_turn": 338,
-                "average_tts_latency_ms_per_turn": 99,
-                "last_stt_ms": 363,
-                "first_tts_ms": 99,
-                "last_llm_ms": 90,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 676,
-                        "count": 2
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 90,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 99,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "5493b950949912f4",
-                "sequence": 22,
-                "ub_latency_ms": 635,
-                "network_latency_ms": 88,
-                "user_stops_speaking": "2026-09-28T15:16:44.787Z",
-                "bot_starts_speaking": "2026-09-28T15:16:45.422Z",
-                "total_latency_ms_per_turn": 547,
-                "average_llm_latency_ms_per_turn": 54,
-                "average_stt_latency_ms_per_turn": 393,
-                "average_tts_latency_ms_per_turn": 100,
-                "last_stt_ms": 393,
-                "first_tts_ms": 100,
-                "last_llm_ms": 54,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 393,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 54,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 100,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "eab8871bba07d7c3",
-                "sequence": 23,
-                "ub_latency_ms": 590,
-                "network_latency_ms": 78,
-                "user_stops_speaking": "2026-09-28T15:16:55.647Z",
-                "bot_starts_speaking": "2026-09-28T15:16:56.237Z",
-                "total_latency_ms_per_turn": 512,
-                "average_llm_latency_ms_per_turn": 54,
-                "average_stt_latency_ms_per_turn": 332,
-                "average_tts_latency_ms_per_turn": 136,
-                "last_stt_ms": 322,
-                "first_tts_ms": 136,
-                "last_llm_ms": 54,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 994,
-                        "count": 3
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 54,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 136,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "106a92d538b199a3",
-                "sequence": 24,
-                "ub_latency_ms": 584,
-                "network_latency_ms": 83,
-                "user_stops_speaking": "2026-09-28T15:17:06.788Z",
-                "bot_starts_speaking": "2026-09-28T15:17:07.371Z",
-                "total_latency_ms_per_turn": 501,
-                "average_llm_latency_ms_per_turn": 38,
-                "average_stt_latency_ms_per_turn": 358,
-                "average_tts_latency_ms_per_turn": 96,
-                "last_stt_ms": 350,
-                "first_tts_ms": 96,
-                "last_llm_ms": 55,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 1074,
-                        "count": 3
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 76,
-                        "count": 2
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 96,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "4ebfe7c3c8ae9996",
-                "sequence": 25,
-                "ub_latency_ms": 701,
-                "network_latency_ms": 112,
-                "user_stops_speaking": "2026-09-28T15:17:17.307Z",
-                "bot_starts_speaking": "2026-09-28T15:17:18.008Z",
-                "total_latency_ms_per_turn": 589,
-                "average_llm_latency_ms_per_turn": 101,
-                "average_stt_latency_ms_per_turn": 372,
-                "average_tts_latency_ms_per_turn": 110,
-                "last_stt_ms": 378,
-                "first_tts_ms": 110,
-                "last_llm_ms": 101,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 743,
-                        "count": 2
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 101,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 110,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "930fcfdb0ac5aa30",
-                "sequence": 26,
-                "ub_latency_ms": 656,
-                "network_latency_ms": 112,
-                "user_stops_speaking": "2026-09-28T15:17:25.966Z",
-                "bot_starts_speaking": "2026-09-28T15:17:26.622Z",
-                "total_latency_ms_per_turn": 544,
-                "average_llm_latency_ms_per_turn": 56,
-                "average_stt_latency_ms_per_turn": 386,
-                "average_tts_latency_ms_per_turn": 102,
-                "last_stt_ms": 386,
-                "first_tts_ms": 102,
-                "last_llm_ms": 56,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 386,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 56,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 102,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "ef8a221187bc3ec9",
-                "sequence": 27,
-                "ub_latency_ms": 644,
-                "network_latency_ms": 81,
-                "user_stops_speaking": "2026-09-28T15:17:35.727Z",
-                "bot_starts_speaking": "2026-09-28T15:17:36.371Z",
-                "total_latency_ms_per_turn": 563,
-                "average_llm_latency_ms_per_turn": 61,
-                "average_stt_latency_ms_per_turn": 402,
-                "average_tts_latency_ms_per_turn": 100,
-                "last_stt_ms": 402,
-                "first_tts_ms": 100,
-                "last_llm_ms": 61,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 402,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 61,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 100,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "fbc76c1d82f48126",
-                "sequence": 28,
-                "ub_latency_ms": 582,
-                "network_latency_ms": 69,
-                "user_stops_speaking": "2026-09-28T15:17:44.387Z",
-                "bot_starts_speaking": "2026-09-28T15:17:44.969Z",
-                "total_latency_ms_per_turn": 513,
-                "average_llm_latency_ms_per_turn": 56,
-                "average_stt_latency_ms_per_turn": 351,
-                "average_tts_latency_ms_per_turn": 106,
-                "last_stt_ms": 351,
-                "first_tts_ms": 106,
-                "last_llm_ms": 56,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 351,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 56,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 106,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "c24dafd3f218d715",
-                "sequence": 29,
-                "ub_latency_ms": 655,
-                "network_latency_ms": 74,
-                "user_stops_speaking": "2026-09-28T15:17:52.987Z",
-                "bot_starts_speaking": "2026-09-28T15:17:53.642Z",
-                "total_latency_ms_per_turn": 581,
-                "average_llm_latency_ms_per_turn": 100,
-                "average_stt_latency_ms_per_turn": 384,
-                "average_tts_latency_ms_per_turn": 97,
-                "last_stt_ms": 384,
-                "first_tts_ms": 97,
-                "last_llm_ms": 100,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 384,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 100,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 97,
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "turn_id": "c8d923782322f698",
-                "sequence": 30,
-                "ub_latency_ms": 572,
-                "network_latency_ms": 84,
-                "user_stops_speaking": "2026-09-28T15:18:01.987Z",
-                "bot_starts_speaking": "2026-09-28T15:18:02.558Z",
-                "total_latency_ms_per_turn": 488,
-                "average_llm_latency_ms_per_turn": 60,
-                "average_stt_latency_ms_per_turn": 328,
-                "average_tts_latency_ms_per_turn": 100,
-                "last_stt_ms": 328,
-                "first_tts_ms": 100,
-                "last_llm_ms": 60,
-                "tool_llm_ms": null,
-                "components": [
-                    {
-                        "component": "STT",
-                        "latency_ms": 328,
-                        "count": 1
-                    },
-                    {
-                        "component": "LLM",
-                        "latency_ms": 60,
-                        "count": 1
-                    },
-                    {
-                        "component": "TTS",
-                        "latency_ms": 100,
-                        "count": 1
-                    }
-                ]
-            }
+  "success": true,
+  "response": {
+    "call_id": "01a0e894-44e3-71b0-8233-abfc3d93f876",
+    "average_stt_latency_ms_per_call": 361,
+    "average_tts_latency_ms_per_call": 101,
+    "average_llm_latency_ms_per_call": 58,
+    "average_total_turn_latency_ms_per_call": 517,
+    "average_perceived_latency_ms_per_call": 701,
+    "turn_count": 29,
+    "spike_turn_count": 0,
+    "latency_volatility": 39,
+    "turns": [
+      {
+        "turn_id": "ab5dc73625c4c123",
+        "sequence": 2,
+        "ub_latency_ms": 613,
+        "network_latency_ms": 87,
+        "user_stops_speaking": "2026-09-28T15:13:56.487Z",
+        "bot_starts_speaking": "2026-09-28T15:13:57.100Z",
+        "total_latency_ms_per_turn": 526,
+        "average_llm_latency_ms_per_turn": 45,
+        "average_stt_latency_ms_per_turn": 385,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 385,
+        "first_tts_ms": 96,
+        "last_llm_ms": 45,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 385,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 45,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
         ]
-    },
-    "message": "Data retrieved successfully."
+      },
+      {
+        "turn_id": "9b549428edd90639",
+        "sequence": 3,
+        "ub_latency_ms": 531,
+        "network_latency_ms": 28,
+        "user_stops_speaking": "2026-09-28T15:14:03.357Z",
+        "bot_starts_speaking": "2026-09-28T15:14:03.888Z",
+        "total_latency_ms_per_turn": 503,
+        "average_llm_latency_ms_per_turn": 42,
+        "average_stt_latency_ms_per_turn": 364,
+        "average_tts_latency_ms_per_turn": 97,
+        "last_stt_ms": 364,
+        "first_tts_ms": 97,
+        "last_llm_ms": 42,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 364,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 42,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 97,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "c2c67726b6f2c19e",
+        "sequence": 4,
+        "ub_latency_ms": 622,
+        "network_latency_ms": 111,
+        "user_stops_speaking": "2026-09-28T15:14:11.197Z",
+        "bot_starts_speaking": "2026-09-28T15:14:11.819Z",
+        "total_latency_ms_per_turn": 511,
+        "average_llm_latency_ms_per_turn": 39,
+        "average_stt_latency_ms_per_turn": 374,
+        "average_tts_latency_ms_per_turn": 98,
+        "last_stt_ms": 374,
+        "first_tts_ms": 98,
+        "last_llm_ms": 39,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 374,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 39,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 98,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "3fe90829ed15652c",
+        "sequence": 5,
+        "ub_latency_ms": 523,
+        "network_latency_ms": 23,
+        "user_stops_speaking": "2026-09-28T15:14:18.557Z",
+        "bot_starts_speaking": "2026-09-28T15:14:19.080Z",
+        "total_latency_ms_per_turn": 500,
+        "average_llm_latency_ms_per_turn": 41,
+        "average_stt_latency_ms_per_turn": 364,
+        "average_tts_latency_ms_per_turn": 95,
+        "last_stt_ms": 364,
+        "first_tts_ms": 95,
+        "last_llm_ms": 41,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 364,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 41,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 95,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "22791491dcd5d53f",
+        "sequence": 6,
+        "ub_latency_ms": 541,
+        "network_latency_ms": 23,
+        "user_stops_speaking": "2026-09-28T15:14:25.217Z",
+        "bot_starts_speaking": "2026-09-28T15:14:25.758Z",
+        "total_latency_ms_per_turn": 518,
+        "average_llm_latency_ms_per_turn": 43,
+        "average_stt_latency_ms_per_turn": 372,
+        "average_tts_latency_ms_per_turn": 103,
+        "last_stt_ms": 372,
+        "first_tts_ms": 103,
+        "last_llm_ms": 43,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 372,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 43,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 103,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "71f8fa73a771a477",
+        "sequence": 7,
+        "ub_latency_ms": 628,
+        "network_latency_ms": 100,
+        "user_stops_speaking": "2026-09-28T15:14:34.637Z",
+        "bot_starts_speaking": "2026-09-28T15:14:35.264Z",
+        "total_latency_ms_per_turn": 528,
+        "average_llm_latency_ms_per_turn": 81,
+        "average_stt_latency_ms_per_turn": 354,
+        "average_tts_latency_ms_per_turn": 112,
+        "last_stt_ms": 335,
+        "first_tts_ms": 112,
+        "last_llm_ms": 81,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 707,
+            "count": 2
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 81,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 112,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "09d61785a97e2646",
+        "sequence": 8,
+        "ub_latency_ms": 476,
+        "network_latency_ms": 26,
+        "user_stops_speaking": "2026-09-28T15:14:40.276Z",
+        "bot_starts_speaking": "2026-09-28T15:14:40.753Z",
+        "total_latency_ms_per_turn": 450,
+        "average_llm_latency_ms_per_turn": 43,
+        "average_stt_latency_ms_per_turn": 311,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 311,
+        "first_tts_ms": 96,
+        "last_llm_ms": 43,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 311,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 43,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "a77851c0865fc1b7",
+        "sequence": 9,
+        "ub_latency_ms": 530,
+        "network_latency_ms": 39,
+        "user_stops_speaking": "2026-09-28T15:14:47.287Z",
+        "bot_starts_speaking": "2026-09-28T15:14:47.818Z",
+        "total_latency_ms_per_turn": 491,
+        "average_llm_latency_ms_per_turn": 44,
+        "average_stt_latency_ms_per_turn": 351,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 351,
+        "first_tts_ms": 96,
+        "last_llm_ms": 44,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 351,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 44,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "a406ac9dc1274a61",
+        "sequence": 10,
+        "ub_latency_ms": 574,
+        "network_latency_ms": 63,
+        "user_stops_speaking": "2026-09-28T15:14:54.856Z",
+        "bot_starts_speaking": "2026-09-28T15:14:55.430Z",
+        "total_latency_ms_per_turn": 511,
+        "average_llm_latency_ms_per_turn": 44,
+        "average_stt_latency_ms_per_turn": 370,
+        "average_tts_latency_ms_per_turn": 97,
+        "last_stt_ms": 370,
+        "first_tts_ms": 97,
+        "last_llm_ms": 44,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 370,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 44,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 97,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "7e93d2a03a6a0de9",
+        "sequence": 11,
+        "ub_latency_ms": 2537,
+        "network_latency_ms": 2074,
+        "user_stops_speaking": "2026-09-28T15:15:01.867Z",
+        "bot_starts_speaking": "2026-09-28T15:15:04.403Z",
+        "total_latency_ms_per_turn": 463,
+        "average_llm_latency_ms_per_turn": 44,
+        "average_stt_latency_ms_per_turn": 321,
+        "average_tts_latency_ms_per_turn": 98,
+        "last_stt_ms": 321,
+        "first_tts_ms": 98,
+        "last_llm_ms": 44,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 321,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 44,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 98,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "847eb804ace44e83",
+        "sequence": 12,
+        "ub_latency_ms": 587,
+        "network_latency_ms": 48,
+        "user_stops_speaking": "2026-09-28T15:15:19.537Z",
+        "bot_starts_speaking": "2026-09-28T15:15:20.124Z",
+        "total_latency_ms_per_turn": 539,
+        "average_llm_latency_ms_per_turn": 81,
+        "average_stt_latency_ms_per_turn": 361,
+        "average_tts_latency_ms_per_turn": 97,
+        "last_stt_ms": 361,
+        "first_tts_ms": 97,
+        "last_llm_ms": 81,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 361,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 81,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 97,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "b80332dd39f43d9d",
+        "sequence": 13,
+        "ub_latency_ms": 514,
+        "network_latency_ms": 19,
+        "user_stops_speaking": "2026-09-28T15:15:25.787Z",
+        "bot_starts_speaking": "2026-09-28T15:15:26.300Z",
+        "total_latency_ms_per_turn": 495,
+        "average_llm_latency_ms_per_turn": 45,
+        "average_stt_latency_ms_per_turn": 351,
+        "average_tts_latency_ms_per_turn": 99,
+        "last_stt_ms": 351,
+        "first_tts_ms": 99,
+        "last_llm_ms": 45,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 351,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 45,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 99,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "defaf53b9fd71f45",
+        "sequence": 14,
+        "ub_latency_ms": 563,
+        "network_latency_ms": 49,
+        "user_stops_speaking": "2026-09-28T15:15:32.047Z",
+        "bot_starts_speaking": "2026-09-28T15:15:32.610Z",
+        "total_latency_ms_per_turn": 514,
+        "average_llm_latency_ms_per_turn": 48,
+        "average_stt_latency_ms_per_turn": 331,
+        "average_tts_latency_ms_per_turn": 135,
+        "last_stt_ms": 331,
+        "first_tts_ms": 135,
+        "last_llm_ms": 48,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 331,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 48,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 135,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "f7c8e4cda22f771b",
+        "sequence": 15,
+        "ub_latency_ms": 615,
+        "network_latency_ms": 199,
+        "user_stops_speaking": "2026-09-28T15:15:44.837Z",
+        "bot_starts_speaking": "2026-09-28T15:15:45.452Z",
+        "total_latency_ms_per_turn": 416,
+        "average_llm_latency_ms_per_turn": 62,
+        "average_stt_latency_ms_per_turn": 341,
+        "average_tts_latency_ms_per_turn": 50,
+        "last_stt_ms": 337,
+        "first_tts_ms": 2,
+        "last_llm_ms": 77,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 682,
+            "count": 2
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 123,
+            "count": 2
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 99,
+            "count": 2
+          }
+        ]
+      },
+      {
+        "turn_id": "7d506ddb6988764d",
+        "sequence": 16,
+        "ub_latency_ms": 606,
+        "network_latency_ms": 85,
+        "user_stops_speaking": "2026-09-28T15:15:49.097Z",
+        "bot_starts_speaking": "2026-09-28T15:15:49.702Z",
+        "total_latency_ms_per_turn": 521,
+        "average_llm_latency_ms_per_turn": 46,
+        "average_stt_latency_ms_per_turn": 375,
+        "average_tts_latency_ms_per_turn": 100,
+        "last_stt_ms": 375,
+        "first_tts_ms": 100,
+        "last_llm_ms": 46,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 375,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 46,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 100,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "0056e763bae5ac8b",
+        "sequence": 17,
+        "ub_latency_ms": 603,
+        "network_latency_ms": 97,
+        "user_stops_speaking": "2026-09-28T15:16:00.857Z",
+        "bot_starts_speaking": "2026-09-28T15:16:01.460Z",
+        "total_latency_ms_per_turn": 506,
+        "average_llm_latency_ms_per_turn": 49,
+        "average_stt_latency_ms_per_turn": 361,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 361,
+        "first_tts_ms": 96,
+        "last_llm_ms": 49,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 361,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 49,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "2c3439bda5d32952",
+        "sequence": 18,
+        "ub_latency_ms": 646,
+        "network_latency_ms": 57,
+        "user_stops_speaking": "2026-09-28T15:16:14.256Z",
+        "bot_starts_speaking": "2026-09-28T15:16:14.903Z",
+        "total_latency_ms_per_turn": 589,
+        "average_llm_latency_ms_per_turn": 91,
+        "average_stt_latency_ms_per_turn": 402,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 402,
+        "first_tts_ms": 96,
+        "last_llm_ms": 91,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 402,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 91,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "dc438588b0ec7023",
+        "sequence": 19,
+        "ub_latency_ms": 591,
+        "network_latency_ms": 68,
+        "user_stops_speaking": "2026-09-28T15:16:22.857Z",
+        "bot_starts_speaking": "2026-09-28T15:16:23.448Z",
+        "total_latency_ms_per_turn": 523,
+        "average_llm_latency_ms_per_turn": 51,
+        "average_stt_latency_ms_per_turn": 373,
+        "average_tts_latency_ms_per_turn": 97,
+        "last_stt_ms": 375,
+        "first_tts_ms": 97,
+        "last_llm_ms": 51,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 746,
+            "count": 2
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 51,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 97,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "51c8f8f382314810",
+        "sequence": 20,
+        "ub_latency_ms": 1741,
+        "network_latency_ms": 1259,
+        "user_stops_speaking": "2026-09-28T15:16:24.437Z",
+        "bot_starts_speaking": "2026-09-28T15:16:26.178Z",
+        "total_latency_ms_per_turn": 482,
+        "average_llm_latency_ms_per_turn": 45,
+        "average_stt_latency_ms_per_turn": 337,
+        "average_tts_latency_ms_per_turn": 100,
+        "last_stt_ms": 337,
+        "first_tts_ms": 100,
+        "last_llm_ms": 45,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 337,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 45,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 100,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "b3b8ba50bd7acabe",
+        "sequence": 21,
+        "ub_latency_ms": 661,
+        "network_latency_ms": 109,
+        "user_stops_speaking": "2026-09-28T15:16:33.307Z",
+        "bot_starts_speaking": "2026-09-28T15:16:33.968Z",
+        "total_latency_ms_per_turn": 552,
+        "average_llm_latency_ms_per_turn": 90,
+        "average_stt_latency_ms_per_turn": 338,
+        "average_tts_latency_ms_per_turn": 99,
+        "last_stt_ms": 363,
+        "first_tts_ms": 99,
+        "last_llm_ms": 90,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 676,
+            "count": 2
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 90,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 99,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "5493b950949912f4",
+        "sequence": 22,
+        "ub_latency_ms": 635,
+        "network_latency_ms": 88,
+        "user_stops_speaking": "2026-09-28T15:16:44.787Z",
+        "bot_starts_speaking": "2026-09-28T15:16:45.422Z",
+        "total_latency_ms_per_turn": 547,
+        "average_llm_latency_ms_per_turn": 54,
+        "average_stt_latency_ms_per_turn": 393,
+        "average_tts_latency_ms_per_turn": 100,
+        "last_stt_ms": 393,
+        "first_tts_ms": 100,
+        "last_llm_ms": 54,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 393,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 54,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 100,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "eab8871bba07d7c3",
+        "sequence": 23,
+        "ub_latency_ms": 590,
+        "network_latency_ms": 78,
+        "user_stops_speaking": "2026-09-28T15:16:55.647Z",
+        "bot_starts_speaking": "2026-09-28T15:16:56.237Z",
+        "total_latency_ms_per_turn": 512,
+        "average_llm_latency_ms_per_turn": 54,
+        "average_stt_latency_ms_per_turn": 332,
+        "average_tts_latency_ms_per_turn": 136,
+        "last_stt_ms": 322,
+        "first_tts_ms": 136,
+        "last_llm_ms": 54,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 994,
+            "count": 3
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 54,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 136,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "106a92d538b199a3",
+        "sequence": 24,
+        "ub_latency_ms": 584,
+        "network_latency_ms": 83,
+        "user_stops_speaking": "2026-09-28T15:17:06.788Z",
+        "bot_starts_speaking": "2026-09-28T15:17:07.371Z",
+        "total_latency_ms_per_turn": 501,
+        "average_llm_latency_ms_per_turn": 38,
+        "average_stt_latency_ms_per_turn": 358,
+        "average_tts_latency_ms_per_turn": 96,
+        "last_stt_ms": 350,
+        "first_tts_ms": 96,
+        "last_llm_ms": 55,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 1074,
+            "count": 3
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 76,
+            "count": 2
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 96,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "4ebfe7c3c8ae9996",
+        "sequence": 25,
+        "ub_latency_ms": 701,
+        "network_latency_ms": 112,
+        "user_stops_speaking": "2026-09-28T15:17:17.307Z",
+        "bot_starts_speaking": "2026-09-28T15:17:18.008Z",
+        "total_latency_ms_per_turn": 589,
+        "average_llm_latency_ms_per_turn": 101,
+        "average_stt_latency_ms_per_turn": 372,
+        "average_tts_latency_ms_per_turn": 110,
+        "last_stt_ms": 378,
+        "first_tts_ms": 110,
+        "last_llm_ms": 101,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 743,
+            "count": 2
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 101,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 110,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "930fcfdb0ac5aa30",
+        "sequence": 26,
+        "ub_latency_ms": 656,
+        "network_latency_ms": 112,
+        "user_stops_speaking": "2026-09-28T15:17:25.966Z",
+        "bot_starts_speaking": "2026-09-28T15:17:26.622Z",
+        "total_latency_ms_per_turn": 544,
+        "average_llm_latency_ms_per_turn": 56,
+        "average_stt_latency_ms_per_turn": 386,
+        "average_tts_latency_ms_per_turn": 102,
+        "last_stt_ms": 386,
+        "first_tts_ms": 102,
+        "last_llm_ms": 56,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 386,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 56,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 102,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "ef8a221187bc3ec9",
+        "sequence": 27,
+        "ub_latency_ms": 644,
+        "network_latency_ms": 81,
+        "user_stops_speaking": "2026-09-28T15:17:35.727Z",
+        "bot_starts_speaking": "2026-09-28T15:17:36.371Z",
+        "total_latency_ms_per_turn": 563,
+        "average_llm_latency_ms_per_turn": 61,
+        "average_stt_latency_ms_per_turn": 402,
+        "average_tts_latency_ms_per_turn": 100,
+        "last_stt_ms": 402,
+        "first_tts_ms": 100,
+        "last_llm_ms": 61,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 402,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 61,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 100,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "fbc76c1d82f48126",
+        "sequence": 28,
+        "ub_latency_ms": 582,
+        "network_latency_ms": 69,
+        "user_stops_speaking": "2026-09-28T15:17:44.387Z",
+        "bot_starts_speaking": "2026-09-28T15:17:44.969Z",
+        "total_latency_ms_per_turn": 513,
+        "average_llm_latency_ms_per_turn": 56,
+        "average_stt_latency_ms_per_turn": 351,
+        "average_tts_latency_ms_per_turn": 106,
+        "last_stt_ms": 351,
+        "first_tts_ms": 106,
+        "last_llm_ms": 56,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 351,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 56,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 106,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "c24dafd3f218d715",
+        "sequence": 29,
+        "ub_latency_ms": 655,
+        "network_latency_ms": 74,
+        "user_stops_speaking": "2026-09-28T15:17:52.987Z",
+        "bot_starts_speaking": "2026-09-28T15:17:53.642Z",
+        "total_latency_ms_per_turn": 581,
+        "average_llm_latency_ms_per_turn": 100,
+        "average_stt_latency_ms_per_turn": 384,
+        "average_tts_latency_ms_per_turn": 97,
+        "last_stt_ms": 384,
+        "first_tts_ms": 97,
+        "last_llm_ms": 100,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 384,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 100,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 97,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "turn_id": "c8d923782322f698",
+        "sequence": 30,
+        "ub_latency_ms": 572,
+        "network_latency_ms": 84,
+        "user_stops_speaking": "2026-09-28T15:18:01.987Z",
+        "bot_starts_speaking": "2026-09-28T15:18:02.558Z",
+        "total_latency_ms_per_turn": 488,
+        "average_llm_latency_ms_per_turn": 60,
+        "average_stt_latency_ms_per_turn": 328,
+        "average_tts_latency_ms_per_turn": 100,
+        "last_stt_ms": 328,
+        "first_tts_ms": 100,
+        "last_llm_ms": 60,
+        "tool_llm_ms": null,
+        "components": [
+          {
+            "component": "STT",
+            "latency_ms": 328,
+            "count": 1
+          },
+          {
+            "component": "LLM",
+            "latency_ms": 60,
+            "count": 1
+          },
+          {
+            "component": "TTS",
+            "latency_ms": 100,
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "message": "Data retrieved successfully."
 }

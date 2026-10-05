@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { isSameMark, markFromSearch, SHARED_MARK_ID, type Mark } from "@/lib/marks";
+import {
+  isSameMark,
+  markFromSearch,
+  SHARED_MARK_ID,
+  type Mark,
+} from "@/lib/marks";
 import { useLocationSearch } from "./useLocationSearch";
 import { useMarks } from "./useMarks";
 
@@ -8,7 +13,8 @@ export function useCallMarks(callId: string) {
   const { marks: saved, add, remove } = useMarks(callId);
   const search = useLocationSearch();
   const fromLink = markFromSearch(search);
-  const savedMatch = fromLink && saved.find((mark) => isSameMark(mark, fromLink));
+  const savedMatch =
+    fromLink && saved.find((mark) => isSameMark(mark, fromLink));
   const shared = fromLink && !savedMatch ? fromLink : null;
   const [picked, setPicked] = useState<string | null>(null);
 

@@ -13,7 +13,10 @@ export const SHORTCUTS = [
 
 export type ShortcutAction = (typeof SHORTCUTS)[number]["action"];
 
-type Chord = Pick<KeyboardEvent, "code" | "altKey" | "shiftKey" | "ctrlKey" | "metaKey">;
+type Chord = Pick<
+  KeyboardEvent,
+  "code" | "altKey" | "shiftKey" | "ctrlKey" | "metaKey"
+>;
 
 export function shortcutAction(e: Chord): ShortcutAction | null {
   if (!e.altKey || !e.shiftKey || e.ctrlKey || e.metaKey) return null;

@@ -1,9 +1,29 @@
 {
-    "note": "Dummy data. The platform export has no tool spans (tool_llm_ms, tool_called and tool_status are empty). Keyed by the latency report's turn_id; each duration fits inside that turn's network_latency_ms.",
-    "tools": [
-        { "turn_id": "7e93d2a03a6a0de9", "name": "search_flights", "status": "ok", "duration_ms": 1900 },
-        { "turn_id": "0056e763bae5ac8b", "name": "create_booking", "status": "ok", "duration_ms": 60 },
-        { "turn_id": "ef8a221187bc3ec9", "name": "get_cancellation_policy", "status": "error", "duration_ms": 45 },
-        { "turn_id": "c24dafd3f218d715", "name": "request_callback", "status": "ok", "duration_ms": 50 }
-    ]
+  "note": "Dummy data. The platform export has no tool spans (tool_llm_ms, tool_called and tool_status are empty). Keyed by the latency report's turn_id; each duration fits inside that turn's network_latency_ms.",
+  "tools": [
+    {
+      "turn_id": "7e93d2a03a6a0de9",
+      "name": "search_flights",
+      "status": "ok",
+      "duration_ms": 1900
+    },
+    {
+      "turn_id": "0056e763bae5ac8b",
+      "name": "create_booking",
+      "status": "ok",
+      "duration_ms": 60
+    },
+    {
+      "turn_id": "ef8a221187bc3ec9",
+      "name": "get_cancellation_policy",
+      "status": "error",
+      "duration_ms": 45
+    },
+    {
+      "turn_id": "c24dafd3f218d715",
+      "name": "request_callback",
+      "status": "ok",
+      "duration_ms": 50
+    }
+  ]
 }

@@ -1,7 +1,10 @@
 import { useEffect, useEffectEvent, type RefObject } from "react";
 
 // Calls onFrame(ms) every animation frame while playing, and once on pause, seek and load.
-export function usePlaybackFrame(audioRef: RefObject<HTMLAudioElement | null>, onFrame: (ms: number) => void) {
+export function usePlaybackFrame(
+  audioRef: RefObject<HTMLAudioElement | null>,
+  onFrame: (ms: number) => void,
+) {
   const frame = useEffectEvent(onFrame);
 
   useEffect(() => {

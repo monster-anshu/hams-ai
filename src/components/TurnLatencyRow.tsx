@@ -1,5 +1,10 @@
 import type { Messages } from "@/lib/i18n";
-import { describeLatency, formatMs, SLOW_MS, type TurnLatency } from "@/lib/latency";
+import {
+  describeLatency,
+  formatMs,
+  SLOW_MS,
+  type TurnLatency,
+} from "@/lib/latency";
 import { StageBar } from "./StageBar";
 import { ToolChip } from "./ToolChip";
 

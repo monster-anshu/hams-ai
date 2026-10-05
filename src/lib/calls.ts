@@ -43,6 +43,10 @@ export function loadCall(id: string) {
   if (!source) return null;
   return {
     call: fromTranscript(source.transcript, source.audioUrl, source.scale),
-    latencies: matchLatencies(source.latency, source.transcript.response.turns, source.tools),
+    latencies: matchLatencies(
+      source.latency,
+      source.transcript.response.turns,
+      source.tools,
+    ),
   };
 }

@@ -27,13 +27,24 @@ type RawLatencyTurn = {
 };
 
 export type LatencyReport = { response: { turns: RawLatencyTurn[] } };
-export type ToolReport = { tools: { turn_id: string; name: string; status: ToolStatus; duration_ms: number }[] };
+export type ToolReport = {
+  tools: {
+    turn_id: string;
+    name: string;
+    status: ToolStatus;
+    duration_ms: number;
+  }[];
+};
 
 const MATCH_WINDOW_MS = 2500;
 
 // The report uses its own turn ids, so each entry is paired with the agent turn
 // that started closest to `bot_starts_speaking`. Result is keyed by transcript turn id.
-export function matchLatencies(report: LatencyReport, turns: RawTurn[], tools?: ToolReport): Map<string, TurnLatency> {
+export function matchLatencies(
+  report: LatencyReport,
+  turns: RawTurn[],
+  tools?: ToolReport,
+): Map<string, TurnLatency> {
   const agents = turns.filter((t) => t.speaker === "agent");
   const toolsByTurn = new Map(tools?.tools.map((t) => [t.turn_id, t]));
   const result = new Map<string, TurnLatency>();
@@ -69,7 +80,9 @@ export function matchLatencies(report: LatencyReport, turns: RawTurn[], tools?: 
   return result;
 }
 
-export function stageTotals(latencies: Iterable<TurnLatency>): Record<Stage, number> {
+export function stageTotals(
+  latencies: Iterable<TurnLatency>,
+): Record<Stage, number> {
   const totals = { stt: 0, llm: 0, tool: 0, tts: 0, other: 0 };
   for (const { stages } of latencies) {
     for (const stage of STAGES) totals[stage] += stages[stage];
@@ -77,7 +90,14 @@ export function stageTotals(latencies: Iterable<TurnLatency>): Record<Stage, num
   return totals;
 }
 
-export type LatencyStats = { count: number; avg: number; p50: number; p99: number; max: number; slow: number };
+export type LatencyStats = {
+  count: number;
+  avg: number;
+  p50: number;
+  p99: number;
+  max: number;
+  slow: number;
+};
 
 // Nearest-rank percentile on a sorted array.
 export function percentile(sorted: number[], p: number): number {
@@ -103,25 +123,45 @@ export function formatMs(ms: number) {
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${ms}ms`;
 }
 
-export function describeLatency({ perceivedMs, stages, tool }: TurnLatency, m: Messages) {
+export function describeLatency(
+  { perceivedMs, stages, tool }: TurnLatency,
+  m: Messages,
+) {
   const parts = STAGES.filter((s) => stages[s] > 0).map((s) => {
-    const label = s === "tool" && tool ? `${tool.name} (${m[tool.status]})` : m[s];
+    const label =
+      s === "tool" && tool ? `${tool.name} (${m[tool.status]})` : m[s];
     return `${label} ${formatMs(stages[s])}`;
   });
   return `${formatMs(perceivedMs)}: ${parts.join(", ")}`;
 }
 
-export type SlowReply = { turn: Turn; latency: TurnLatency; silenceStartMs: number };
+export type SlowReply = {
+  turn: Turn;
+  latency: TurnLatency;
+  silenceStartMs: number;
+};
 
-export function slowReplies(turns: Turn[], latencies: Map<string, TurnLatency>): SlowReply[] {
+export function slowReplies(
+  turns: Turn[],
+  latencies: Map<string, TurnLatency>,
+): SlowReply[] {
   return turns.flatMap((turn) => {
     const latency = latencies.get(turn.id);
     if (!latency || latency.perceivedMs < SLOW_MS) return [];
-    return [{ turn, latency, silenceStartMs: Math.max(0, turn.startMs - latency.perceivedMs) }];
+    return [
+      {
+        turn,
+        latency,
+        silenceStartMs: Math.max(0, turn.startMs - latency.perceivedMs),
+      },
+    ];
   });
 }
 
 // First slow reply whose silence starts after `afterMs`, wrapping to the start of the call.
-export function nextSlowReply(replies: SlowReply[], afterMs: number): SlowReply | null {
+export function nextSlowReply(
+  replies: SlowReply[],
+  afterMs: number,
+): SlowReply | null {
   return replies.find((r) => r.silenceStartMs > afterMs) ?? replies[0] ?? null;
 }

@@ -12,5 +12,7 @@ export default async function CallPage({ params }: PageProps<"/calls/[id]">) {
   const { id } = await params;
   const loaded = loadCall(id);
   if (!loaded) notFound();
-  return <CallReview callId={id} call={loaded.call} latencies={loaded.latencies} />;
+  return (
+    <CallReview callId={id} call={loaded.call} latencies={loaded.latencies} />
+  );
 }

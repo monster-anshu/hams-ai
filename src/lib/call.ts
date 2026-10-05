@@ -1,4 +1,9 @@
-export type Word = { w: string; startMs: number; endMs: number; confidence: number };
+export type Word = {
+  w: string;
+  startMs: number;
+  endMs: number;
+  confidence: number;
+};
 
 export type Turn = {
   id: string;
@@ -13,7 +18,12 @@ export type Turn = {
 export type PipelineEvent = { turnId: string; atMs: number } & (
   | { type: "stt.final"; latencyMs: number }
   | { type: "llm.first_token"; latencyMs: number }
-  | { type: "tool.call"; name: string; durationMs: number; status: "ok" | "error" | "timeout" }
+  | {
+      type: "tool.call";
+      name: string;
+      durationMs: number;
+      status: "ok" | "error" | "timeout";
+    }
   | { type: "tts.first_audio"; latencyMs: number }
 );
 
@@ -36,7 +46,11 @@ export type RawTurn = {
 export type RawTranscript = { response: { call_id: string; turns: RawTurn[] } };
 
 // `scale` stretches wall-clock timestamps onto the audio timeline when the two drift.
-export function fromTranscript(raw: RawTranscript, audioUrl: string, scale = 1): CallRecord {
+export function fromTranscript(
+  raw: RawTranscript,
+  audioUrl: string,
+  scale = 1,
+): CallRecord {
   const t0 = Date.parse(raw.response.turns[0].start_time);
   const toMs = (iso: string) => Math.round((Date.parse(iso) - t0) * scale);
 
@@ -63,7 +77,11 @@ export function fromTranscript(raw: RawTranscript, audioUrl: string, scale = 1):
 }
 
 // The source has no word timings, so split each turn's span by word length.
-export function spreadWords(text: string, startMs: number, endMs: number): Word[] {
+export function spreadWords(
+  text: string,
+  startMs: number,
+  endMs: number,
+): Word[] {
   const tokens = text.split(/\s+/).filter(Boolean);
   const totalChars = tokens.reduce((n, w) => n + w.length, 0);
   const msPerChar = (endMs - startMs) / totalChars;
@@ -72,6 +90,11 @@ export function spreadWords(text: string, startMs: number, endMs: number): Word[
   return tokens.map((w) => {
     const start = cursor;
     cursor += w.length * msPerChar;
-    return { w, startMs: Math.round(start), endMs: Math.round(cursor), confidence: 1 };
+    return {
+      w,
+      startMs: Math.round(start),
+      endMs: Math.round(cursor),
+      confidence: 1,
+    };
   });
 }

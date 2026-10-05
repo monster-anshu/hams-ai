@@ -10,16 +10,31 @@ export const STAGE_COLORS: Record<Stage, string> = {
 };
 
 // Width is `total / scaleMs`, so bars that share a scale compare at a glance.
-export function StageBar({ stages, scaleMs }: { stages: Record<Stage, number>; scaleMs: number }) {
+export function StageBar({
+  stages,
+  scaleMs,
+}: {
+  stages: Record<Stage, number>;
+  scaleMs: number;
+}) {
   const total = STAGES.reduce((sum, s) => sum + stages[s], 0);
 
   return (
-    <div aria-hidden className="flex h-2 gap-[2px]" style={{ width: `${Math.min(100, (total / scaleMs) * 100)}%` }}>
+    <div
+      aria-hidden
+      className="flex h-2 gap-[2px]"
+      style={{ width: `${Math.min(100, (total / scaleMs) * 100)}%` }}
+    >
       {STAGES.filter((s) => stages[s] > 0).map((s) => (
         <span
           key={s}
           className="h-full first:rounded-s last:rounded-e"
-          style={{ flexGrow: stages[s], flexBasis: 0, minWidth: 2, background: STAGE_COLORS[s] }}
+          style={{
+            flexGrow: stages[s],
+            flexBasis: 0,
+            minWidth: 2,
+            background: STAGE_COLORS[s],
+          }}
         />
       ))}
     </div>
